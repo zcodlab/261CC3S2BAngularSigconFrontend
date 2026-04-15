@@ -1,0 +1,157 @@
+@use "sass:map";
+@use "abstracts/shared" as *;
+
+/* --- ESTRUCTURA DEL SLIDER (MANTENIDO) --- */
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - rem(70px));
+  min-height: rem(500px);
+  overflow: hidden;
+  background-color: map.get($colors, "bg-light");
+}
+
+.slider-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+/* --- ESTILOS ESPECÍFICOS DE COMPONENTES --- */
+.text-shadow {
+  text-shadow: rem(2px) rem(2px) rem(4px) rgba(0,0,0,0.5);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: rem(1px) solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s;
+  &:hover {
+    transform: translateY(rem(-10px));
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.solution-card-bootstrap {
+  transition: all 0.4s ease;
+  &:hover {
+    transform: translateY(rem(-10px));
+    box-shadow: 0 rem(15px) rem(35px) rgba(0,0,128,0.2) !important;
+    .solution-img { transform: scale(1.1); }
+  }
+}
+
+.solution-img {
+  transition: transform 0.6s ease;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+}
+
+.feature-card-bootstrap {
+  background: #f8f9ff;
+  border: rem(1px) solid #eef0ff;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(rem(-10px));
+    border-color: map.get($colors, "primary");
+    background: map.get($colors, "white");
+  }
+}
+
+.cta-section {
+  background: linear-gradient(135deg, map.get($colors, "primary") 0%, map.get($colors, "primary-dark") 100%);
+}
+
+.testimonials-section {
+  background: linear-gradient(135deg, map.get($colors, "accent") 0%, map.get($colors, "primary") 100%);
+}
+
+/* --- CONTROLES DEL SLIDER (MANTENIDOS) --- */
+.slider-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(0,0,0,0.2); color: map.get($colors, "white"); width: rem(50px); height: rem(50px);
+  border: none; cursor: pointer; font-size: rem(24px); z-index: 10;
+  border-radius: 50%; display: flex; justify-content: center; align-items: center;
+  transition: background 0.3s;
+  &:hover { background: rgba(0,0,0,0.5); }
+}
+.prev { left: rem(20px); }
+.next { right: rem(20px); }
+
+.slider-dots { position: absolute; bottom: rem(20px); width: 100%; text-align: center; z-index: 10; }
+.dot {
+  cursor: pointer; height: rem(12px); width: rem(12px); margin: 0 rem(5px);
+  background-color: #bbb; border-radius: 50%; display: inline-block;
+  transition: background-color 0.3s;
+  &.dot-active, &:hover { background-color: map.get($colors, "primary"); }
+}
+
+/* --- TESTIMONIALS SLIDER (MANTENIDO) --- */
+.testimonial-card-slider {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden;
+  transition: all 0.6s ease; transform: translateX(rem(50px));
+}
+.testimonial-card-slider.active-testimonial { opacity: 1; visibility: visible; transform: translateX(0); }
+
+.t-slider-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(0,0,0,0.05); color: map.get($colors, "primary"); width: rem(40px); height: rem(40px);
+  border: none; cursor: pointer; font-size: rem(20px); z-index: 10;
+  border-radius: 50%; display: flex; justify-content: center; align-items: center;
+  transition: all 0.3s;
+  &:hover { background: map.get($colors, "primary"); color: white; }
+}
+.t-prev { left: rem(-50px); }
+.t-next { right: rem(-50px); }
+
+.t-dot { width: rem(8px); height: rem(8px); background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer; &.t-dot-active { background: map.get($colors, "white"); transform: scale(1.2); } }
+
+@include respond-to("md") {
+  .t-slider-btn { display: none; }
+  .slider-container { height: auto; min-height: rem(400px); }
+  .slide { position: relative; height: rem(400px); }
+}
