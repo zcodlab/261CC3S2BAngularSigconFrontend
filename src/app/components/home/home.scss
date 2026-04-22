@@ -61,19 +61,31 @@
 }
 
 /* --- ESTILOS ESPECÍFICOS DE COMPONENTES --- */
-.text-shadow {
-  text-shadow: rem(2px) rem(2px) rem(4px) rgba(0,0,0,0.5);
+.hero-row {
+  min-height: 80vh;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  border: rem(1px) solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s;
-  &:hover {
-    transform: translateY(rem(-10px));
-    background: rgba(255, 255, 255, 0.2);
-  }
+.title-underline {
+  height: rem(4px);
+  width: rem(80px);
+}
+
+.step-underline {
+  height: rem(2px);
+  width: rem(40px);
+}
+
+.solution-badge-size {
+  width: rem(40px);
+  height: rem(40px);
+}
+
+.cta-max-width {
+  max-width: rem(700px);
+}
+
+.testimonials-wrapper {
+  min-height: rem(250px);
 }
 
 .solution-card-bootstrap {

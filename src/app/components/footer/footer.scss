@@ -1,0 +1,6 @@
+@use "sass:map";
+@use "abstracts/shared" as *;
+
+footer {
+  background: map.get($colors, "primary");
+}

@@ -1,111 +1,124 @@
 <div class="slider-container">
   <div class="slider">
-    <div class="slide" *ngFor="let slide of slides; let i = index" [class.active]="i === currentIndex">
-      <img [src]="slide.url" alt="Sigcon Slider">
-      <div class="slider-overlay"></div>
+    @for (slide of slides; track i; let i = $index) {
+      <div class="slide" [class.active]="i === currentIndex">
+        <img [src]="slide.url" alt="Sigcon Slider">
+        <div class="slider-overlay"></div>
 
-      <div class="hero-overlay" [ngSwitch]="slide.type">
-        <!-- TIPO HERO -->
-        <div class="container" *ngSwitchCase="'hero'">
-          <div class="row align-items-center justify-content-start" style="min-height: 80vh;">
-            <div class="col-lg-8 text-white">
-              <h1 class="display-3 fw-bold mb-4 text-uppercase text-shadow">EL MEJOR SOFTWARE PARA ADMINISTRAR EDIFICIOS</h1>
-              <p class="lead mb-5 text-shadow">Gestiona tu condominio de forma eficiente, profesional y transparente con la plataforma líder en el mercado.</p>
-              <div class="d-flex gap-3">
-                <a routerLink="/contact" class="btn btn-primary btn-lg px-4 fw-bold">Solicitar Demo</a>
-                <a href="#solution" class="btn btn-outline-light btn-lg px-4 fw-bold">Saber más</a>
+        <div class="hero-overlay">
+          @switch (slide.type) {
+            @case ('hero') {
+              <!-- TIPO HERO -->
+              <div class="container">
+                <div class="row align-items-center justify-content-start hero-row">
+                  <div class="col-lg-8 text-white">
+                    <h1 class="display-3 fw-bold mb-4 text-uppercase text-shadow">EL MEJOR SOFTWARE PARA ADMINISTRAR EDIFICIOS</h1>
+                    <p class="lead mb-5 text-shadow">Gestiona tu condominio de forma eficiente, profesional y transparente con la plataforma líder en el mercado.</p>
+                    <div class="d-flex gap-3">
+                      <a routerLink="/contact" class="btn btn-primary btn-lg px-4 fw-bold">Solicitar Demo</a>
+                      <a href="#solution" class="btn btn-outline-light btn-lg px-4 fw-bold">Saber más</a>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
+            }
 
-        <!-- TIPO ABOUT -->
-        <div class="container" *ngSwitchCase="'about'">
-          <div class="row align-items-center" style="min-height: 80vh;">
-            <div class="col-lg-7 text-white text-shadow">
-              <h2 class="display-4 fw-bold mb-3">¿Por qué elegir Sigcon?</h2>
-              <div class="title-underline-left bg-primary" style="height: 4px; width: 80px;"></div>
-              <p class="lead mb-4">Sigcon es la plataforma líder para la administración de edificios y condominios. Nuestra herramienta simplifica las tareas diarias de los administradores y mejora la comunicación con los residentes.</p>
-              <ul class="list-unstyled">
-                <li class="d-flex align-items-center mb-3 fs-5"><span class="badge bg-primary rounded-circle me-3 p-2">✓</span> <strong>Automatización total:</strong> Reduce el trabajo manual en un 70%.</li>
-                <li class="d-flex align-items-center mb-3 fs-5"><span class="badge bg-primary rounded-circle me-3 p-2">✓</span> <strong>Transparencia:</strong> Reportes financieros claros para todos.</li>
-                <li class="d-flex align-items-center mb-3 fs-5"><span class="badge bg-primary rounded-circle me-3 p-2">✓</span> <strong>Soporte 24/7:</strong> Estamos contigo cuando nos necesites.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+            @case ('about') {
+              <!-- TIPO ABOUT -->
+              <div class="container">
+                <div class="row align-items-center hero-row">
+                  <div class="col-lg-7 text-white text-shadow">
+                    <h2 class="display-4 fw-bold mb-3">¿Por qué elegir Sigcon?</h2>
+                    <div class="title-underline-left bg-primary title-underline"></div>
+                    <p class="lead mb-4">Sigcon es la plataforma líder para la administración de edificios y condominios. Nuestra herramienta simplifica las tareas diarias de los administradores y mejora la comunicación con los residentes.</p>
+                    <ul class="list-unstyled">
+                      <li class="d-flex align-items-center mb-3 fs-5"><span class="badge bg-primary rounded-circle me-3 p-2">✓</span> <strong>Automatización total:</strong> Reduce el trabajo manual en un 70%.</li>
+                      <li class="d-flex align-items-center mb-3 fs-5"><span class="badge bg-primary rounded-circle me-3 p-2">✓</span> <strong>Transparencia:</strong> Reportes financieros claros para todos.</li>
+                      <li class="d-flex align-items-center mb-3 fs-5"><span class="badge bg-primary rounded-circle me-3 p-2">✓</span> <strong>Soporte 24/7:</strong> Estamos contigo cuando nos necesites.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            }
 
-        <!-- TIPO EASY -->
-        <div class="container h-100 d-flex align-items-center" *ngSwitchCase="'easy'">
-          <div class="w-100 text-white text-center">
-            <h2 class="display-4 fw-bold mb-5 text-shadow">Es fácil</h2>
-            <div class="row g-4 justify-content-center">
-              <div class="col-lg col-md-4">
-                <div class="p-4 rounded-3 h-100 glass-card">
-                  <div class="text-warning fw-bold mb-2 fs-4">01</div>
-                  <div class="bg-warning mb-3" style="height: 2px; width: 40px;"></div>
-                  <h3 class="h4">Ingresa</h3>
-                  <p class="small">Accede a Sigcon desde cualquier dispositivo</p>
+            @case ('easy') {
+              <!-- TIPO EASY -->
+              <div class="container h-100 d-flex align-items-center">
+                <div class="w-100 text-white text-center">
+                  <h2 class="display-4 fw-bold mb-5 text-shadow">Es fácil</h2>
+                  <div class="row g-4 justify-content-center">
+                    <div class="col-lg col-md-4">
+                      <div class="p-4 rounded-3 h-100 glass-card">
+                        <div class="text-warning fw-bold mb-2 fs-4">01</div>
+                        <div class="bg-warning mb-3 step-underline"></div>
+                        <h3 class="h4">Ingresa</h3>
+                        <p class="small">Accede a Sigcon desde cualquier dispositivo</p>
+                      </div>
+                    </div>
+                    <div class="col-lg col-md-4">
+                      <div class="p-4 rounded-3 h-100 glass-card">
+                        <div class="text-warning fw-bold mb-2 fs-4">02</div>
+                        <div class="bg-warning mb-3 step-underline"></div>
+                        <h3 class="h4">Registra</h3>
+                        <p class="small">Registra tus gastos y servicios del edificio</p>
+                      </div>
+                    </div>
+                    <div class="col-lg col-md-4">
+                      <div class="p-4 rounded-3 h-100 glass-card">
+                        <div class="text-warning fw-bold mb-2 fs-4">03</div>
+                        <div class="bg-warning mb-3 step-underline"></div>
+                        <h3 class="h4">Imprime y envía</h3>
+                        <p class="small">Genera y distribuye recibos de cobranza</p>
+                      </div>
+                    </div>
+                    <div class="col-lg col-md-6">
+                      <div class="p-4 rounded-3 h-100 glass-card">
+                        <div class="text-warning fw-bold mb-2 fs-4">04</div>
+                        <div class="bg-warning mb-3 step-underline"></div>
+                        <h3 class="h4">Cobra y paga</h3>
+                        <p class="small">Gestiona cobros y pagos del condominio</p>
+                      </div>
+                    </div>
+                    <div class="col-lg col-md-6">
+                      <div class="p-4 rounded-3 h-100 glass-card">
+                        <div class="text-warning fw-bold mb-2 fs-4">05</div>
+                        <div class="bg-warning mb-3 step-underline"></div>
+                        <h3 class="h4">Consulta</h3>
+                        <p class="small">Accede a información en línea las 24 horas</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="col-lg col-md-4">
-                <div class="p-4 rounded-3 h-100 glass-card">
-                  <div class="text-warning fw-bold mb-2 fs-4">02</div>
-                  <div class="bg-warning mb-3" style="height: 2px; width: 40px;"></div>
-                  <h3 class="h4">Registra</h3>
-                  <p class="small">Registra tus gastos y servicios del edificio</p>
-                </div>
-              </div>
-              <div class="col-lg col-md-4">
-                <div class="p-4 rounded-3 h-100 glass-card">
-                  <div class="text-warning fw-bold mb-2 fs-4">03</div>
-                  <div class="bg-warning mb-3" style="height: 2px; width: 40px;"></div>
-                  <h3 class="h4">Imprime y envía</h3>
-                  <p class="small">Genera y distribuye recibos de cobranza</p>
-                </div>
-              </div>
-              <div class="col-lg col-md-6">
-                <div class="p-4 rounded-3 h-100 glass-card">
-                  <div class="text-warning fw-bold mb-2 fs-4">04</div>
-                  <div class="bg-warning mb-3" style="height: 2px; width: 40px;"></div>
-                  <h3 class="h4">Cobra y paga</h3>
-                  <p class="small">Gestiona cobros y pagos del condominio</p>
-                </div>
-              </div>
-              <div class="col-lg col-md-6">
-                <div class="p-4 rounded-3 h-100 glass-card">
-                  <div class="text-warning fw-bold mb-2 fs-4">05</div>
-                  <div class="bg-warning mb-3" style="height: 2px; width: 40px;"></div>
-                  <h3 class="h4">Consulta</h3>
-                  <p class="small">Accede a información en línea las 24 horas</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            }
 
-        <!-- TIPO PROBLEMS -->
-        <div class="container h-100 d-flex align-items-center" *ngSwitchCase="'problems'">
-          <div class="w-100 text-white text-center">
-            <h2 class="display-3 fw-bold mb-2 text-shadow">Olvídate de los problemas</h2>
-            <h3 class="display-6 fw-bold mb-5 text-warning text-shadow">Administra con SIGCON</h3>
-            <div class="mt-4">
-              <a routerLink="/contact" class="btn btn-primary btn-lg px-5">Contáctanos</a>
-            </div>
-          </div>
+            @case ('problems') {
+              <!-- TIPO PROBLEMS -->
+              <div class="container h-100 d-flex align-items-center">
+                <div class="w-100 text-white text-center">
+                  <h2 class="display-3 fw-bold mb-2 text-shadow">Olvídate de los problemas</h2>
+                  <h3 class="display-6 fw-bold mb-5 text-warning text-shadow">Administra con SIGCON</h3>
+                  <div class="mt-4">
+                    <a routerLink="/contact" class="btn btn-primary btn-lg px-5">Contáctanos</a>
+                  </div>
+                </div>
+              </div>
+            }
+          }
         </div>
       </div>
-    </div>
+    }
   </div>
 
   <button class="slider-btn prev" (click)="prevSlide()">&#10094;</button>
   <button class="slider-btn next" (click)="nextSlide()">&#10095;</button>
 
   <div class="slider-dots">
-    <span *ngFor="let dot of slides; let i = index"
-          class="dot"
-          [class.dot-active]="i === currentIndex"
-          (click)="goToSlide(i)"></span>
+    @for (dot of slides; track i; let i = $index) {
+      <span class="dot"
+            [class.dot-active]="i === currentIndex"
+            (click)="goToSlide(i)"></span>
+    }
   </div>
 </div>
 
@@ -113,7 +126,7 @@
   <div class="container py-5">
     <div class="text-center mb-5">
       <h2 class="display-5 fw-bold text-primary mb-3">La solución ideal para su condominio</h2>
-      <div class="mx-auto bg-primary" style="height: 4px; width: 80px;"></div>
+      <div class="mx-auto bg-primary title-underline"></div>
     </div>
 
     <div class="row g-4 mt-4">
@@ -121,7 +134,7 @@
         <div class="card h-100 border-0 shadow-sm solution-card-bootstrap">
           <div class="position-relative overflow-hidden rounded-top">
             <img src="assets/imagenes/operaciones/operacion1.jpg" class="card-img-top solution-img" alt="Ingresa">
-            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">1</span>
+            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center solution-badge-size">1</span>
           </div>
           <div class="card-body text-center">
             <h3 class="h5 fw-bold mb-0">Ingresa</h3>
@@ -132,7 +145,7 @@
         <div class="card h-100 border-0 shadow-sm solution-card-bootstrap">
           <div class="position-relative overflow-hidden rounded-top">
             <img src="assets/imagenes/operaciones/operacion2.jpg" class="card-img-top solution-img" alt="Registra">
-            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">2</span>
+            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center solution-badge-size">2</span>
           </div>
           <div class="card-body text-center">
             <h3 class="h5 fw-bold mb-0">Registra</h3>
@@ -143,7 +156,7 @@
         <div class="card h-100 border-0 shadow-sm solution-card-bootstrap">
           <div class="position-relative overflow-hidden rounded-top">
             <img src="assets/imagenes/operaciones/operacion3.jpg" class="card-img-top solution-img" alt="Imprime">
-            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">3</span>
+            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center solution-badge-size">3</span>
           </div>
           <div class="card-body text-center">
             <h3 class="h5 fw-bold mb-0">Imprime</h3>
@@ -154,7 +167,7 @@
         <div class="card h-100 border-0 shadow-sm solution-card-bootstrap">
           <div class="position-relative overflow-hidden rounded-top">
             <img src="assets/imagenes/operaciones/operacion4.jpg" class="card-img-top solution-img" alt="Envia">
-            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">4</span>
+            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center solution-badge-size">4</span>
           </div>
           <div class="card-body text-center">
             <h3 class="h5 fw-bold mb-0">Envia</h3>
@@ -165,7 +178,7 @@
         <div class="card h-100 border-0 shadow-sm solution-card-bootstrap">
           <div class="position-relative overflow-hidden rounded-top">
             <img src="assets/imagenes/operaciones/operacion5.jpg" class="card-img-top solution-img" alt="Cobra y Paga">
-            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">5</span>
+            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center solution-badge-size">5</span>
           </div>
           <div class="card-body text-center">
             <h3 class="h5 fw-bold mb-0">Cobra y Paga</h3>
@@ -176,7 +189,7 @@
         <div class="card h-100 border-0 shadow-sm solution-card-bootstrap">
           <div class="position-relative overflow-hidden rounded-top">
             <img src="assets/imagenes/operaciones/operacion6.jpg" class="card-img-top solution-img" alt="Consulta">
-            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">6</span>
+            <span class="badge bg-primary rounded-circle position-absolute top-0 start-0 m-3 p-2 fs-5 d-flex align-items-center justify-content-center solution-badge-size">6</span>
           </div>
           <div class="card-body text-center">
             <h3 class="h5 fw-bold mb-0">Consulta</h3>
@@ -191,7 +204,7 @@
   <div class="container py-5">
     <div class="text-center mb-5">
       <h2 class="display-5 fw-bold text-primary mb-3">Funcionalidades de Sigcon</h2>
-      <div class="mx-auto bg-primary" style="height: 4px; width: 80px;"></div>
+      <div class="mx-auto bg-primary title-underline"></div>
     </div>
 
     <div class="row g-4 mt-4">
@@ -244,7 +257,7 @@
 <section class="py-5 cta-section text-white">
   <div class="container py-5 text-center">
     <h2 class="display-3 fw-bold mb-3">PRUEBA SIGCON</h2>
-    <p class="lead mb-5 opacity-75 mx-auto" style="max-width: 700px;">Únete a cientos de edificios que ya confían en nosotros para una gestión eficiente y transparente.</p>
+    <p class="lead mb-5 opacity-75 mx-auto cta-max-width">Únete a cientos de edificios que ya confían en nosotros para una gestión eficiente y transparente.</p>
     <div class="row justify-content-center g-5 mb-5">
       <div class="col-auto">
         <div class="text-center">
@@ -277,13 +290,15 @@
     </div>
 
     <div class="row justify-content-center mb-5">
-      <div class="col-md-8 position-relative" style="min-height: 250px;">
-        <div class="testimonial-card-slider text-center p-5 rounded-4 bg-white text-dark shadow-lg h-100 d-flex flex-column justify-content-center" *ngFor="let t of testimonials; let i = index" [class.active-testimonial]="i === testimonialIndex">
-          <span class="display-1 text-primary opacity-25 position-absolute top-0 start-0 ms-3 mt-n2">"</span>
-          <p class="fs-5 fw-normal italic mb-4">{{ t.text }}</p>
-          <p class="fw-bold text-primary mb-0">— {{ t.author }}</p>
-          <span class="display-1 text-primary opacity-25 position-absolute bottom-0 end-0 me-3 mb-n2">"</span>
-        </div>
+      <div class="col-md-8 position-relative testimonials-wrapper">
+        @for (t of testimonials; track i; let i = $index) {
+          <div class="testimonial-card-slider text-center p-5 rounded-4 bg-white text-dark shadow-lg h-100 d-flex flex-column justify-content-center" [class.active-testimonial]="i === testimonialIndex">
+            <span class="display-1 text-primary opacity-25 position-absolute top-0 start-0 ms-3 mt-n2">"</span>
+            <p class="fs-5 fw-normal italic mb-4">{{ t.text }}</p>
+            <p class="fw-bold text-primary mb-0">— {{ t.author }}</p>
+            <span class="display-1 text-primary opacity-25 position-absolute bottom-0 end-0 me-3 mb-n2">"</span>
+          </div>
+        }
 
         <button class="t-slider-btn t-prev" (click)="prevTestimonial()">&#10094;</button>
         <button class="t-slider-btn t-next" (click)="nextTestimonial()">&#10095;</button>
@@ -292,10 +307,11 @@
 
     <div class="text-center mb-4">
       <div class="d-flex justify-content-center gap-2">
-        <span *ngFor="let dot of testimonials; let i = index"
-              class="t-dot"
-              [class.t-dot-active]="i === testimonialIndex"
-              (click)="goToTestimonial(i)"></span>
+        @for (dot of testimonials; track i; let i = $index) {
+          <span class="t-dot"
+                [class.t-dot-active]="i === testimonialIndex"
+                (click)="goToTestimonial(i)"></span>
+        }
       </div>
     </div>
 
@@ -303,15 +319,7 @@
       <div class="col-lg-8 text-center">
         <h3 class="fw-bold h4 mb-3">Somos DSW</h3>
         <p class="opacity-75">Establecida por un grupo de profesionales con experiencia en sistemas y tecnología, DSW proporciona soluciones flexibles y personalizadas adaptadas a los requisitos particulares de nuestros clientes.</p>
-
-        <hr class="my-5 opacity-25">
-
-        <h3 class="fw-bold h4 mb-3">Contáctanos</h3>
-        <p class="mb-1">Lima 15048 - Perú</p>
-        <p class="mb-1">Teléfono: +51 999-999999 / +51 999-888888</p>
-        <p>Email: <a href="mailto:info&#64;dsw.org" class="text-white">info&#64;dsw.org</a></p>
       </div>
     </div>
   </div>
 </section>
-
