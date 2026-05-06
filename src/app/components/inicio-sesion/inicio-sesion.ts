@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
 import { UserRequest } from '../../model/api/request/user-request';
 import { UserResponse } from '../../model/api/response/user-response';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -17,9 +18,10 @@ export class InicioSesion {
   location = inject(Location);
   router = inject(Router);
   authService = inject(AuthService);
-  toastService = inject(ToastService)
+  toastService = inject(ToastService);
   userRequest:UserRequest={} as UserRequest;
   userResponse:UserResponse={} as UserResponse;
+  sessionService=inject(SessionService);
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -41,6 +43,7 @@ export class InicioSesion {
         console.log(this.userResponse);
         console.log('Login successful');
         this.authService.setToken(this.userResponse.token);
+        console.log(this.sessionService.getInfoSession());
         this.toastService.show('Ingreso exitoso', 'success');
         this.router.navigate(['/']);
       },
