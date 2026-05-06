@@ -1,4 +1,8 @@
-<app-header />
-<app-toast-container />
-<router-outlet/>
-<app-footer />
+<div class="app-container">
+  <app-header />
+  <app-toast-container />
+  <main class="flex-grow-1 d-flex flex-column">
+    <router-outlet />
+  </main>
+  <app-footer />
+</div>

@@ -1,0 +1,33 @@
+<div class="dashboard-container d-flex flex-grow-1">
+  <!-- Sidebar -->
+  <div class="sidebar bg-primary text-white p-3">
+    <h4 class="mb-4">Menú</h4>
+    <ul class="nav flex-column">
+      @for (modulo of user?.modulos; track modulo.idMod) {
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="modulo.url">{{ modulo.descripcion }}</a>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content flex-grow-1 d-flex flex-column">
+    <!-- Topbar -->
+    <nav class="navbar navbar-light bg-light justify-content-between px-4 border-bottom">
+      <div>
+        @if (user) {
+          <strong>{{ user.names }} </strong> - <span>{{ user.rol.codigo }}</span>
+        }
+      </div>
+      <button class="btn btn-outline-danger btn-sm" (click)="logout()">Cerrar sesión</button>
+    </nav>
+
+    <!-- Main Section -->
+    <div class="content-area container-fluid p-3 flex-grow-1">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+

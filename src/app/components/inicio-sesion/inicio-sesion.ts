@@ -45,7 +45,7 @@ export class InicioSesion {
         this.authService.setToken(this.userResponse.token);
         console.log(this.sessionService.getInfoSession());
         this.toastService.show('Ingreso exitoso', 'success');
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       },
       (err:any)=>{
         console.log(err);
