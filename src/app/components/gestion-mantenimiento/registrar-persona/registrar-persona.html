@@ -1,202 +1,230 @@
- <!-- Form Cabecera -->
-<div class="card">
-  <div class="card-body">
-    <form class="form-group">
-      <div class="row mb-2">
-        <label for="apellidoPaterno" class="col-form-label col-sm-2">Apellido Paterno:</label>
-        <div class="col-sm-4">
-          <input
-          type="text"
-          class="form-control"
-          id="apellidoPaterno"
-          placeholder="Apellido Paterno"
-          formControlName="apellidoPaterno"
-          />
-        </div>
-      </div>
-      <div class="row mb-2">
-        <label for="apellidoMaterno" class="col-form-label col-sm-2">Apellido Materno:</label>
-        <div class="col-sm-4">
-          <input
-          type="text"
-          class="form-control"
-          id="apellidoMaterno"
-          placeholder="Apellido Materno"
-          formControlName="apellidoMaterno"
-          />
-        </div>
-      </div>
-      <div class="row mb-2">
-        <label for="nombres" class="col-form-label col-sm-2">Nombres:</label>
-        <div class="col-sm-4">
-          <input
-          type="text"
-          class="form-control"
-          id="nombres"
-          placeholder="Nombres"
-          formControlName="nombres"
-          />
-        </div>
-      </div>
+<div class="container p-0">
+  <div class="row">
+    <h5 class="px-4">{{title}}</h5>
+    <!-- Form Cabecera -->
+    <div class="card">
+      <div class="card-body">
+        <form class="form-group" [formGroup]="personaForm">
+          <div class="row mb-2">
+            <label for="apellidoPaterno" class="col-form-label col-sm-2">Apellido Paterno:</label>
+            <div class="col-sm-4">
+              <input
+              type="text"
+              class="form-control"
+              id="apellidoPaterno"
+              placeholder="Apellido Paterno"
+              formControlName="apellidoPaterno"
+              />
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label for="apellidoMaterno" class="col-form-label col-sm-2">Apellido Materno:</label>
+            <div class="col-sm-4">
+              <input
+              type="text"
+              class="form-control"
+              id="apellidoMaterno"
+              placeholder="Apellido Materno"
+              formControlName="apellidoMaterno"
+              />
+            </div>
+          </div>
+          <div class="row mb-2">
+            <label for="nombres" class="col-form-label col-sm-2">Nombres:</label>
+            <div class="col-sm-4">
+              <input
+              type="text"
+              class="form-control"
+              id="nombres"
+              placeholder="Nombres"
+              formControlName="nombres"
+              />
+            </div>
+          </div>
 
-      <div class="row mb-2">
-        <label for="idSexo" class="col-form-label col-sm-2">Genero:</label>
-        <div class="col-sm-2">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="F">Femenino</option>
-            <option value="M">Masculino</option>
-            <option value="I">Indeterminado</option>
-          </select>
-        </div>
-      </div>
+          <div class="row mb-2">
+            <label for="idSexo" class="col-form-label col-sm-2">Genero:</label>
+            <div class="col-sm-2">
+              <select class="form-control form-select"
+              aria-label="Default select example"
+              id="idSexo"
+              formControlName="idSexo"
+              (change)="setSexo($event)"
+              >
+              @for(sexo of sexoArray; track sexo.idSexo){
+                <option value="{{sexo.idSexo}}">{{sexo.descripcion}}</option>
+              }
+              </select>
+            </div>
+          </div>
 
-      <div class="row mb-2">
-        <label for="fechaNacimiento" class="col-form-label col-sm-2">Fecha Nac:</label>
-        <div class="col-sm-2">
-          <input
-          type="date"
-          class="form-control"
-          id="fechaNacimiento"
-          formControlName="fechaNacimiento"
-          />
-        </div>
-      </div>
+          <div class="row mb-2">
+            <label for="fechaNacimiento" class="col-form-label col-sm-2">Fecha Nac:</label>
+            <div class="col-sm-2">
+              <input
+              type="date"
+              class="form-control"
+              id="fechaNacimiento"
+              formControlName="fechaNacimiento"
+              />
+            </div>
+          </div>
 
-      <div class="row mb-2">
-        <label for="idTipoDocumento" class="col-form-label col-sm-2">Tipo Documento:</label>
-        <div class="col-sm-2">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">DNI</option>
-            <option value="2">Carne Extranjeria</option>
-            <option value="3">Otro</option>
-          </select>
-        </div>
-      </div>
+          <div class="row mb-2">
+            <label for="idTipoDocumento" class="col-form-label col-sm-2">Tipo Documento:</label>
+            <div class="col-sm-2">
+              <select class="form-control form-select"
+              aria-label="Default select example"
+              id="idTipoDocumento"
+              formControlName="idTipoDocumento"
+              (change)="setTipoDocumento($event)"
+              >
+              @for(tipodoc of tipoDocumentoArray; track tipodoc.idTipoDocumento){
+                <option value="{{tipodoc.idTipoDocumento}}">{{tipodoc.descripcion}}</option>
+              }
+              </select>
+            </div>
+          </div>
 
-      <div class="row mb-2">
-        <label for="numDocumento" class="col-form-label col-sm-2">N° Documento:</label>
-        <div class="col-sm-2">
-          <input
-          type="text"
-          class="form-control"
-          id="numDocumento"
-          placeholder="numDocumento"
-          formControlName="numDocumento"
-          />
-        </div>
-      </div>
+          <div class="row mb-2">
+            <label for="numDocumento" class="col-form-label col-sm-2">N° Documento:</label>
+            <div class="col-sm-2">
+              <input
+              type="text"
+              class="form-control"
+              id="numDocumento"
+              placeholder="numDocumento"
+              formControlName="numDocumento"
+              />
+            </div>
+          </div>
 
-      <div class="row mb-2">
-        <label for="telefono" class="col-form-label col-sm-2">N° Telefono:</label>
-        <div class="col-sm-2">
-          <input
-          type="text"
-          class="form-control"
-          id="telefono"
-          placeholder="Telefono"
-          formControlName="telefono"
-          />
-        </div>
-      </div>
+          <div class="row mb-2">
+            <label for="telefono" class="col-form-label col-sm-2">N° Telefono:</label>
+            <div class="col-sm-2">
+              <input
+              type="text"
+              class="form-control"
+              id="telefono"
+              placeholder="Telefono"
+              formControlName="telefono"
+              />
+            </div>
+          </div>
 
-      <div class="row mb-2">
-        <label for="direccion" class="col-form-label col-sm-2">Direccion:</label>
-        <div class="col-sm-4">
-          <input
-          type="text"
-          class="form-control"
-          id="direccion"
-          placeholder="Direccion"
-          formControlName="direccion"
-          />
-        </div>
-      </div>
+          <div class="row mb-2">
+            <label for="direccion" class="col-form-label col-sm-2">Direccion:</label>
+            <div class="col-sm-4">
+              <input
+              type="text"
+              class="form-control"
+              id="direccion"
+              placeholder="Direccion"
+              formControlName="direccion"
+              />
+            </div>
+          </div>
 
-      <div class="row mb-2">
-        <label for="idUbigeo" class="col-form-label col-sm-2">Ubigeo:</label>
-        <div class="col-sm-2">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="150101">Lima</option>
-            <option value="150102">Rimac</option>
-            <option value="150103">Otro</option>
-          </select>
-        </div>
+          <div class="row mb-2">
+            <label for="idUbigeo" class="col-form-label col-sm-2">Ubigeo:</label>
+            <div class="col-sm-2">
+              <select class="form-control form-select"
+              aria-label="Default select example"
+              id="idUbigeo"
+              formControlName="idUbigeo"
+              (change)="setUbigeo($event)"
+              >
+              @for(ubigeo of ubigeoArray; track ubigeo.idUbigeo){
+                <option value="{{ubigeo.idUbigeo}}">{{
+                  ubigeo.departamento+"|"+
+                  ubigeo.provincia+"|"+
+                  ubigeo.distrito
+                }}</option>
+              }
+              </select>
+            </div>
+          </div>
+          <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="registrarPersona()"
+          >Registrar
+          </button>
+        </form>
       </div>
+    </div>
+    <!-- Form Detalle -->
+    <div class="card">
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Apellido Paterno</th>
+              <th scope="col">Apellido Materno</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Genero</th>
+              <th scope="col">Fech.Nac</th>
+              <th scope="col">TipoDocumento</th>
+              <th scope="col">N°Docu</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Direccion</th>
+              <th scope="col">Ubigeo</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(persona of personaArray | paginate:{itemsPerPage:10,currentPage:page}; track persona.idPersona; let i=$index){
+              <tr>
+                <td>{{i+1}}</td>
+                <td>{{persona.apellidoPaterno}}</td>
+                <td>{{persona.apellidoMaterno}}</td>
+                <td>{{persona.nombres}}</td>
+                @if(persona.sexo){
+                    <td>{{persona.sexo.descripcion}}</td>
+                }@else{
+                    <td>Sin Género</td>
+                }
+                <td>{{persona.fechaNacimiento}}</td>
+                @if(persona.tipoDocumento){
+                  <td>{{persona.tipoDocumento.descripcion}}</td>
+                }@else{
+                  <td>Sin Documento</td>
+                }
+                <td>{{persona.numDocumento}}</td>
+                <td>{{persona.telefono}}</td>
+                <td>{{persona.direccion}}</td>
+                @if(persona.ubigeo){
+                  <td>{{persona.ubigeo.departamento+"|"+
+                  persona.ubigeo.provincia+"|"+
+                  persona.ubigeo.distrito
+                  }}</td>
+                }@else{
+                    <td>Sin Ubigeo</td>
+                }
+                <td>
+                  <button class="btn btn-secondary rounded-circle p-2 lh-1" (click)="editarPersona(persona)">
+                    <i class="bi-pencil-square"></i>
+                  </button>
+                </td>
+                <td>
+                  <button class="btn btn-danger rounded-circle p-2 lh-1" (click)="eliminarPersona(persona)">
+                    <i class="bi-trash-fill"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <pagination-controls
+        (pageChange)="page=$event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente">
+        </pagination-controls>
+      </div>
+    </div>
 
-    </form>
   </div>
 </div>
-<!-- Form Detalle -->
-<div class="card">
-  <div class="card-body">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Apellido Paterno</th>
-          <th scope="col">Apellido Materno</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Genero</th>
-          <th scope="col">Fech.Nac</th>
-          <th scope="col">TipoDocumento</th>
-          <th scope="col">N°Docu</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Direccion</th>
-          <th scope="col">Ubigeo</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for(persona of personaArray | paginate:{itemsPerPage:10,currentPage:page}; track persona.idPersona; let i=$index){
-          <tr>
-            <td>{{i+1}}</td>
-            <td>{{persona.apellidoPaterno}}</td>
-            <td>{{persona.apellidoMaterno}}</td>
-            <td>{{persona.nombres}}</td>
-            @if(persona.sexo){
-                <td>{{persona.sexo.descripcion}}</td>
-            }@else{
-                <td>Sin Género</td>
-            }
-            <td>{{persona.fechaNacimiento}}</td>
-            @if(persona.tipoDocumento){
-              <td>{{persona.tipoDocumento.descripcion}}</td>
-            }@else{
-              <td>Sin Documento</td>
-            }
-            <td>{{persona.numDocumento}}</td>
-            <td>{{persona.telefono}}</td>
-            <td>{{persona.direccion}}</td>
-            @if(persona.ubigeo){
-              <td>{{persona.ubigeo.departamento+"|"+
-              persona.ubigeo.provincia+"|"+
-              persona.ubigeo.distrito
-              }}</td>
-            }@else{
-                <td>Sin Ubigeo</td>
-            }
-            <td>
-              <button class="btn btn-secondary rounded-circle p-2 lh-1" (click)="editarPersona(persona)">
-                <i class="bi-pencil-square"></i>
-              </button>
-            </td>
-            <td>
-              <button class="btn btn-danger rounded-circle p-2 lh-1" (click)="eliminarPersona(persona)">
-                <i class="bi-trash-fill"></i>
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-    <pagination-controls
-    (pageChange)="page=$event"
-    previousLabel="Anterior"
-    nextLabel="Siguiente">
-    </pagination-controls>
-  </div>
-</div>
+
 
 
