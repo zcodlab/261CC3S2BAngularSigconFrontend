@@ -28,6 +28,13 @@ export class RegistrarPersona implements OnInit{
       this.personaArray=result;
       this.cdr.detectChanges();
     });
+  }
+
+  editarPersona(persona: PersonaResponse):void{
+
+  }
+
+  eliminarPersona(persona:PersonaResponse):void {
 
   }
 }

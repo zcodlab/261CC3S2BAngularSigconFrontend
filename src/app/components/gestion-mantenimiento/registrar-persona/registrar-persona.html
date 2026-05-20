@@ -67,6 +67,16 @@
             }@else{
                 <td>Sin Ubigeo</td>
             }
+            <td>
+              <button class="btn btn-secondary rounded-circle p-2 lh-1" (click)="editarPersona(persona)">
+                <i class="bi-pencil-square"></i>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger rounded-circle p-2 lh-1" (click)="eliminarPersona(persona)">
+                <i class="bi-trash-fill"></i>
+              </button>
+            </td>
           </tr>
         }
       </tbody>
