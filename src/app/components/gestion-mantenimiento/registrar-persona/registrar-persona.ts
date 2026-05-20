@@ -4,11 +4,12 @@ import { PersonaResponse } from '../../../model/api/response/persona-response';
 import { PersonaService } from '../../../services/persona.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @Component({
   selector: 'app-registrar-persona',
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule,CommonModule,NgxPaginationModule],
   templateUrl: './registrar-persona.html',
   styleUrl: './registrar-persona.scss',
 })
@@ -17,6 +18,7 @@ export class RegistrarPersona implements OnInit{
   private cdr=inject(ChangeDetectorRef);
 
   personaArray:PersonaResponse[]=[];
+  page:number=1;
 
   ngOnInit(): void {
     this.getPersonas();
