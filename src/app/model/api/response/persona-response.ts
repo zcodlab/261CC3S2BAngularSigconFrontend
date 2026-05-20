@@ -9,7 +9,7 @@ export interface PersonaResponse {
   nombres: string;
   sexo:Sexo;
   fechaNacimiento: Date;
-  ndocumento: string;
+  numDocumento: string;
   direccion: string;
   telefono: string;
   tipoDocumento: TipoDocumento;

@@ -6,7 +6,7 @@ export interface PersonaRequest {
   idSexo: string;
   fechaNacimiento: Date;
   idTipoDocumento: number;
-  ndocumento: string;
+  numDocumento: string;
   direccion: string;
   telefono: string;
   idUbigeo: string;
