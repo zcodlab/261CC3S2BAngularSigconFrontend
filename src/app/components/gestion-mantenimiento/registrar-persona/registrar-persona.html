@@ -1,21 +1,131 @@
  <!-- Form Cabecera -->
 <div class="card">
   <div class="card-body">
-    <form>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    <form class="form-group">
+      <div class="row mb-2">
+        <label for="apellidoPaterno" class="col-form-label col-sm-2">Apellido Paterno:</label>
+        <div class="col-sm-4">
+          <input
+          type="text"
+          class="form-control"
+          id="apellidoPaterno"
+          placeholder="Apellido Paterno"
+          formControlName="apellidoPaterno"
+          />
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
+      <div class="row mb-2">
+        <label for="apellidoMaterno" class="col-form-label col-sm-2">Apellido Materno:</label>
+        <div class="col-sm-4">
+          <input
+          type="text"
+          class="form-control"
+          id="apellidoMaterno"
+          placeholder="Apellido Materno"
+          formControlName="apellidoMaterno"
+          />
+        </div>
       </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      <div class="row mb-2">
+        <label for="nombres" class="col-form-label col-sm-2">Nombres:</label>
+        <div class="col-sm-4">
+          <input
+          type="text"
+          class="form-control"
+          id="nombres"
+          placeholder="Nombres"
+          formControlName="nombres"
+          />
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="row mb-2">
+        <label for="idSexo" class="col-form-label col-sm-2">Genero:</label>
+        <div class="col-sm-2">
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="F">Femenino</option>
+            <option value="M">Masculino</option>
+            <option value="I">Indeterminado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label for="fechaNacimiento" class="col-form-label col-sm-2">Fecha Nac:</label>
+        <div class="col-sm-2">
+          <input
+          type="date"
+          class="form-control"
+          id="fechaNacimiento"
+          formControlName="fechaNacimiento"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label for="idTipoDocumento" class="col-form-label col-sm-2">Tipo Documento:</label>
+        <div class="col-sm-2">
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">DNI</option>
+            <option value="2">Carne Extranjeria</option>
+            <option value="3">Otro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label for="numDocumento" class="col-form-label col-sm-2">N° Documento:</label>
+        <div class="col-sm-2">
+          <input
+          type="text"
+          class="form-control"
+          id="numDocumento"
+          placeholder="numDocumento"
+          formControlName="numDocumento"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label for="telefono" class="col-form-label col-sm-2">N° Telefono:</label>
+        <div class="col-sm-2">
+          <input
+          type="text"
+          class="form-control"
+          id="telefono"
+          placeholder="Telefono"
+          formControlName="telefono"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label for="direccion" class="col-form-label col-sm-2">Direccion:</label>
+        <div class="col-sm-4">
+          <input
+          type="text"
+          class="form-control"
+          id="direccion"
+          placeholder="Direccion"
+          formControlName="direccion"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label for="idUbigeo" class="col-form-label col-sm-2">Ubigeo:</label>
+        <div class="col-sm-2">
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="150101">Lima</option>
+            <option value="150102">Rimac</option>
+            <option value="150103">Otro</option>
+          </select>
+        </div>
+      </div>
+
     </form>
   </div>
 </div>
