@@ -1,6 +1,9 @@
 <div class="dashboard-container d-flex flex-grow-1">
   <!-- Sidebar -->
   <div class="sidebar bg-primary text-white p-3">
+    <a class="navbar-brand" routerLink="/">
+          <img src="assets/imagenes/operaciones/sigcon-brand-logo.svg" alt="SIGCON Logo" class="brand-logo" height="60">
+        </a>
     <h4 class="mb-4">Menú</h4>
     <ul class="nav flex-column">
       @for (modulo of user?.modulos; track modulo.idMod) {
@@ -14,7 +17,7 @@
   <!-- Main content -->
   <div class="main-content flex-grow-1 d-flex flex-column">
     <!-- Topbar -->
-    <nav class="navbar navbar-light bg-light justify-content-between px-4 border-bottom">
+    <nav class="navbar navbar-light bg-secondary-subtle justify-content-between px-4 border-bottom">
       <div>
         @if (user) {
           <strong>{{ user.names }} </strong> - <span>{{ user.rol.codigo }}</span>
@@ -27,6 +30,10 @@
     <div class="content-area container-fluid p-3 flex-grow-1">
       <router-outlet></router-outlet>
     </div>
+    <!-- Footer Section -->
+    <footer class="text-left px-4 py-2 bg-secondary-subtle mt-auto">
+      <span>©SIGCON 2026</span>
+    </footer>
   </div>
 </div>
 

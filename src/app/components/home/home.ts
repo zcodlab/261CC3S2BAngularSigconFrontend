@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Header } from '../header/header';
+import { Footer } from '../footer/footer';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink,CommonModule],
+  imports: [RouterLink,CommonModule,Header,Footer],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

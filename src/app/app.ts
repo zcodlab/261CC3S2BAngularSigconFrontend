@@ -1,13 +1,10 @@
 import { Component, signal } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { RouterOutlet} from '@angular/router';
-import { Footer } from "./components/footer/footer";
-import { Header } from "./components/header/header";
-import { ToastContainer } from './components/toast-container/toast-container';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, Footer, Header, ToastContainer],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
