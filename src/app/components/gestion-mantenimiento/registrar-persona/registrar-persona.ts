@@ -34,6 +34,7 @@ export class RegistrarPersona implements OnInit{
   ubigeoArray:Ubigeo[]=[];
   page:number=1;
   personaForm:FormGroup;
+  isEdited: boolean=false;
 
   constructor(){
     this.personaForm=new FormGroup({
@@ -121,7 +122,7 @@ export class RegistrarPersona implements OnInit{
 
   registrarPersona(){
     this.setPersonaRequest();
-
+    //console.log('this.personaRequest:',this.personaRequest);
     this.personaService.registrarPersona(this.personaRequest).subscribe((
       result:PersonaResponse)=>{
         console.log('registrarPersona:',result);
@@ -129,7 +130,20 @@ export class RegistrarPersona implements OnInit{
   }
 
   editarPersona(persona: PersonaResponse):void{
-
+    this.personaForm.patchValue({
+      idPersona:persona.idPersona,
+      apellidoPaterno:persona.apellidoPaterno,
+      apellidoMaterno:persona.apellidoMaterno,
+      nombres:persona.nombres,
+      idSexo:persona?.sexo?.idSexo,
+      fechaNacimiento:persona.fechaNacimiento,
+      idTipoDocumento:persona?.tipoDocumento?.idTipoDocumento,
+      numDocumento:persona.numDocumento,
+      telefono:persona.telefono,
+      direccion:persona.direccion,
+      idUbigeo:persona?.ubigeo?.idUbigeo
+    });
+    this.isEdited=true;
   }
 
   eliminarPersona(persona:PersonaResponse):void {
