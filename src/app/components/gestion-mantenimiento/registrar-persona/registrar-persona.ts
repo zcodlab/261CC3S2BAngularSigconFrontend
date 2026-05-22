@@ -11,6 +11,7 @@ import { TipoDocumentoService } from '../../../services/tipo-documento.service';
 import { TipoDocumento } from '../../../model/tipo-documento';
 import { UbigeoService } from '../../../services/ubigeo.service';
 import { Ubigeo } from '../../../model/ubigeo';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -53,10 +54,12 @@ export class RegistrarPersona implements OnInit{
   }
 
   ngOnInit(): void {
+    this.isEdited=false;
     this.getSexo();
     this.getTipoDocumento();
     this.getUbigeo();
     this.getPersonas();
+    this.setFormValuesIni();
   }
 
   getPersonas():void {
@@ -69,7 +72,6 @@ export class RegistrarPersona implements OnInit{
 
   getSexo():void {
     this.sexoService.getSexo().subscribe((result:Sexo[])=>{
-      console.log('getSexo:',result);
       this.sexoArray=result;
       this.cdr.detectChanges();
     });
@@ -82,7 +84,6 @@ export class RegistrarPersona implements OnInit{
 
   getTipoDocumento():void {
     this.tipoDocumentoService.getTipoDocumento().subscribe((result:TipoDocumento[])=>{
-      console.log('getTipoDocumento:',result);
       this.tipoDocumentoArray=result;
       this.cdr.detectChanges();
     });
@@ -95,7 +96,6 @@ export class RegistrarPersona implements OnInit{
 
   getUbigeo():void {
     this.ubigeoService.getUbigeo().subscribe((result:Ubigeo[])=>{
-      console.log('getUbigeo:',result);
       this.ubigeoArray=result;
       this.cdr.detectChanges();
     });
@@ -120,33 +120,151 @@ export class RegistrarPersona implements OnInit{
     this.personaRequest.idUbigeo=this.personaForm.get('idUbigeo')?.value;
   }
 
-  registrarPersona(){
-    this.setPersonaRequest();
-    //console.log('this.personaRequest:',this.personaRequest);
-    this.personaService.registrarPersona(this.personaRequest).subscribe((
-      result:PersonaResponse)=>{
-        console.log('registrarPersona:',result);
+  setFormValuesIni(){
+    this.personaForm.patchValue({
+      idSexo:'I',
+      idTipoDocumento:1,
+      idUbigeo:'150101'
     })
   }
 
+  refreshForm(){
+    this.getPersonas();
+    this.personaForm.reset();
+    this.isEdited=false;
+    this.setFormValuesIni();
+  }
+
+  registrarPersona():void{
+    this.setPersonaRequest();
+    if(this.isEdited) this.actualizarPersona();
+    else this.insertarPersona();
+
+  }
+
+  insertarPersona():void{
+    Swal.fire({
+      title:'Esta seguro de registrar los datos de la persona',
+      showCancelButton:true,
+      cancelButtonText:'No',
+      confirmButtonText:'Si',
+      confirmButtonColor:'#000080',
+      cancelButtonColor:'#ff0000',
+      focusCancel:true,
+    }).then((result)=>{
+      if(result.isConfirmed){
+        this.personaService.registrarPersona(this.personaRequest).subscribe(
+        (result:PersonaResponse)=>{
+          console.log('registrarPersona:',result);
+          this.refreshForm();
+          Swal.fire({
+            icon:'success',
+            title:'registrarPersona...',
+            text:'!Se registro exitosamente los datos de la persona!',
+            confirmButtonColor:'#000080',
+          })
+        },
+        (err:any)=>{
+          Swal.fire({
+            icon:'error',
+            title:'registrarPersona...',
+            text:'!Ah ocurrido un error al registrar datos de la persona!',
+            confirmButtonColor:'#ff0000',
+          })
+        }
+      )
+      }
+
+    })
+
+  }
+
+  actualizarPersona():void{
+    console.log('actualizarPersona:',this.personaRequest);
+    this.personaService.actualizarPersona(this.personaRequest).subscribe(
+      (result:PersonaResponse)=>{
+          console.log('actualizarPersona:',result);
+          this.refreshForm();
+          Swal.fire({
+            icon:'success',
+            title:'actualizarPersona...',
+            text:'!Se actualizó exitosamente los datos de la persona!',
+            confirmButtonColor:'#000080',
+          })
+        },
+        (err:any)=>{
+          Swal.fire({
+            icon:'error',
+            title:'actualizarPersona...',
+            text:'!Ah ocurrido un error al actualizar los datos de la persona!',
+            confirmButtonColor:'#ff0000',
+          })
+        }
+    )
+  }
+
   editarPersona(persona: PersonaResponse):void{
-    this.personaForm.patchValue({
-      idPersona:persona.idPersona,
-      apellidoPaterno:persona.apellidoPaterno,
-      apellidoMaterno:persona.apellidoMaterno,
-      nombres:persona.nombres,
-      idSexo:persona?.sexo?.idSexo,
-      fechaNacimiento:persona.fechaNacimiento,
-      idTipoDocumento:persona?.tipoDocumento?.idTipoDocumento,
-      numDocumento:persona.numDocumento,
-      telefono:persona.telefono,
-      direccion:persona.direccion,
-      idUbigeo:persona?.ubigeo?.idUbigeo
-    });
-    this.isEdited=true;
+    Swal.fire({
+      title:'Esta seguro de editar los datos de la persona',
+      showCancelButton:true,
+      cancelButtonText:'No',
+      confirmButtonText:'Si',
+      confirmButtonColor:'#000080',
+      cancelButtonColor:'#ff0000',
+      focusCancel:true,
+    }).then((result)=>{
+      if(result.isConfirmed){
+        this.personaForm.patchValue({
+        idPersona:persona.idPersona,
+        apellidoPaterno:persona.apellidoPaterno,
+        apellidoMaterno:persona.apellidoMaterno,
+        nombres:persona.nombres,
+        idSexo:persona?.sexo?.idSexo,
+        fechaNacimiento:persona.fechaNacimiento,
+        idTipoDocumento:persona?.tipoDocumento?.idTipoDocumento,
+        numDocumento:persona.numDocumento,
+        telefono:persona.telefono,
+        direccion:persona.direccion,
+        idUbigeo:persona?.ubigeo?.idUbigeo
+        });
+        this.isEdited=true;
+      }
+    })
   }
 
   eliminarPersona(persona:PersonaResponse):void {
-
+    Swal.fire({
+      title:'Esta seguro de eliminar los datos de la persona',
+      showCancelButton:true,
+      cancelButtonText:'No',
+      confirmButtonText:'Si',
+      confirmButtonColor:'#000080',
+      cancelButtonColor:'#ff0000',
+      focusCancel:true,
+    }).then((result)=>{
+      if(result.isConfirmed){
+        const request:PersonaRequest={...this.personaRequest,idPersona:persona.idPersona}
+        this.personaService.eliminarPersona(request).subscribe(
+          (result:PersonaResponse)=>{
+            console.log('eliminarPersona:',result);
+            this.refreshForm();
+            Swal.fire({
+              icon:'success',
+              title:'eliminarPersona...',
+              text:'!Se eliminó exitosamente los datos de la persona!',
+              confirmButtonColor:'#000080',
+            })
+          },
+          (err:any)=>{
+            Swal.fire({
+              icon:'error',
+              title:'eliminarPersona...',
+              text:'!Ah ocurrido un error al eliminar los datos de la persona!',
+              confirmButtonColor:'#ff0000',
+            })
+          }
+      )
+      }
+    })
   }
 }
