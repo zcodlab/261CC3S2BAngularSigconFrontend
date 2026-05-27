@@ -25,3 +25,9 @@
     font-weight: bold;
   }
 }
+
+:host ::ng-deep {
+  .ngx-pagination .current {
+    background: #000080 !important;
+  }
+}
