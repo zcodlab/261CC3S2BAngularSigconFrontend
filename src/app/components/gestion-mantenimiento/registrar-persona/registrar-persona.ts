@@ -236,13 +236,14 @@ export class RegistrarPersona implements OnInit{
         this.personaService.registrarPersona(this.personaRequest).subscribe(
         (result:PersonaResponse)=>{
           console.log('registrarPersona:',result);
-          this.refreshForm();
           Swal.fire({
             icon:'success',
             title:'registrarPersona...',
             text:'!Se registro exitosamente los datos de la persona!',
             confirmButtonColor:'#000080',
-          })
+          }).then(() => {
+            this.refreshForm();
+          });
         },
         (err:any)=>{
           Swal.fire({
@@ -269,8 +270,9 @@ export class RegistrarPersona implements OnInit{
             title:'actualizarPersona...',
             text:'!Se actualizó exitosamente los datos de la persona!',
             confirmButtonColor:'#000080',
-          })
-          this.refreshForm();
+          }).then(() => {
+            this.refreshForm();
+          });
         },
         (err:any)=>{
           Swal.fire({
@@ -335,13 +337,14 @@ export class RegistrarPersona implements OnInit{
         this.personaService.eliminarPersona(request).subscribe(
           (result:PersonaResponse)=>{
             console.log('eliminarPersona:',result);
-            this.refreshForm();
             Swal.fire({
               icon:'success',
               title:'eliminarPersona...',
               text:'!Se eliminó exitosamente los datos de la persona!',
               confirmButtonColor:'#000080',
-            })
+            }).then(() => {
+              this.refreshForm();
+            });
           },
           (err:any)=>{
             Swal.fire({
