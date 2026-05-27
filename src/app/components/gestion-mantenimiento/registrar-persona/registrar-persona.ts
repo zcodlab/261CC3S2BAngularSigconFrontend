@@ -12,11 +12,12 @@ import { TipoDocumento } from '../../../model/tipo-documento';
 import { UbigeoService } from '../../../services/ubigeo.service';
 import { Ubigeo } from '../../../model/ubigeo';
 import Swal from 'sweetalert2';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
   selector: 'app-registrar-persona',
-  imports: [ReactiveFormsModule,CommonModule,NgxPaginationModule],
+  imports: [ReactiveFormsModule, CommonModule, NgxPaginationModule, NgbTooltip],
   templateUrl: './registrar-persona.html',
   styleUrl: './registrar-persona.scss',
 })
@@ -36,6 +37,38 @@ export class RegistrarPersona implements OnInit{
   page:number=1;
   personaForm:FormGroup;
   isEdited: boolean=false;
+
+  getErrorMessage(controlName: string): string {
+    const control = this.personaForm.get(controlName);
+    if (control?.touched || control?.dirty) {
+      if (control?.hasError('required')) return 'Este campo es obligatorio';
+      if (control?.hasError('pattern')) {
+        switch (controlName) {
+          case 'apellidoPaterno':
+          case 'apellidoMaterno':
+          case 'nombres':
+            return 'Solo letras mayúsculas, máx 30';
+          case 'numDocumento':
+            return 'Debe tener 9 dígitos numéricos';
+          case 'telefono':
+            return '9 dígitos (no empieza con 0)';
+          default:
+            return 'Formato inválido';
+        }
+      }
+    }
+    return '';
+  }
+
+  onEnterKey(event: any): void {
+    event.preventDefault();
+    const form = event.target.form;
+    const index = Array.prototype.indexOf.call(form, event.target);
+    const nextElement = form.elements[index + 1];
+    if (nextElement) {
+      nextElement.focus();
+    }
+  }
 
   constructor(){
     this.personaForm=new FormGroup({

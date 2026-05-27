@@ -1,5 +1,27 @@
-:host ::ng-deep {
-  .ngx-pagination .current {
-    background: #000080 !important;
+/* Fix for floating labels with large inputs in Bootstrap 5 */
+.form-floating > .form-control-lg {
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.form-floating > .form-control-lg ~ label {
+  padding: 1rem 0.75rem;
+}
+
+.form-floating > .form-control.is-invalid {
+  border-width: 2px;
+}
+
+/* Uppercase transformation for specific fields */
+.uppercase-input {
+  text-transform: uppercase;
+}
+
+/* Ensure tooltips are readable */
+.red-tooltip {
+  .tooltip-inner {
+    background-color: #dc3545 !important;
+    color: white !important;
+    font-weight: bold;
   }
 }

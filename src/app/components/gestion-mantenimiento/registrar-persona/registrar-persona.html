@@ -4,16 +4,26 @@
     <!-- Form Cabecera -->
     <div class="card">
       <div class="card-body">
-        <form class="form-group" [formGroup]="personaForm">
+        <form class="form-group" [formGroup]="personaForm" (keydown.enter)="onEnterKey($event)">
           <div class="row mb-2">
             <label for="apellidoPaterno" class="col-form-label col-sm-2">Apellido Paterno:</label>
             <div class="col-sm-4">
               <input
               type="text"
-              class="form-control"
+              class="form-control uppercase-input"
+              [class.is-invalid]="personaForm.get('apellidoPaterno')?.invalid && (personaForm.get('apellidoPaterno')?.touched || personaForm.get('apellidoPaterno')?.dirty)"
               id="apellidoPaterno"
               placeholder="Apellido Paterno"
               formControlName="apellidoPaterno"
+              (input)="personaForm.get('apellidoPaterno')?.setValue($any($event.target).value.toUpperCase())"
+              #apTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('apellidoPaterno')"
+              triggers="manual"
+              (input)="getErrorMessage('apellidoPaterno') ? apTooltip.open() : apTooltip.close()"
+              (focus)="getErrorMessage('apellidoPaterno') ? apTooltip.open() : apTooltip.close()"
+              (blur)="apTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               />
             </div>
           </div>
@@ -22,10 +32,20 @@
             <div class="col-sm-4">
               <input
               type="text"
-              class="form-control"
+              class="form-control uppercase-input"
+              [class.is-invalid]="personaForm.get('apellidoMaterno')?.invalid && (personaForm.get('apellidoMaterno')?.touched || personaForm.get('apellidoMaterno')?.dirty)"
               id="apellidoMaterno"
               placeholder="Apellido Materno"
               formControlName="apellidoMaterno"
+              (input)="personaForm.get('apellidoMaterno')?.setValue($any($event.target).value.toUpperCase())"
+              #amTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('apellidoMaterno')"
+              triggers="manual"
+              (input)="getErrorMessage('apellidoMaterno') ? amTooltip.open() : amTooltip.close()"
+              (focus)="getErrorMessage('apellidoMaterno') ? amTooltip.open() : amTooltip.close()"
+              (blur)="amTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               />
             </div>
           </div>
@@ -34,10 +54,20 @@
             <div class="col-sm-4">
               <input
               type="text"
-              class="form-control"
+              class="form-control uppercase-input"
+              [class.is-invalid]="personaForm.get('nombres')?.invalid && (personaForm.get('nombres')?.touched || personaForm.get('nombres')?.dirty)"
               id="nombres"
               placeholder="Nombres"
               formControlName="nombres"
+              (input)="personaForm.get('nombres')?.setValue($any($event.target).value.toUpperCase())"
+              #nomTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('nombres')"
+              triggers="manual"
+              (input)="getErrorMessage('nombres') ? nomTooltip.open() : nomTooltip.close()"
+              (focus)="getErrorMessage('nombres') ? nomTooltip.open() : nomTooltip.close()"
+              (blur)="nomTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               />
             </div>
           </div>
@@ -46,10 +76,18 @@
             <label for="idSexo" class="col-form-label col-sm-2">Genero:</label>
             <div class="col-sm-2">
               <select class="form-control form-select"
+              [class.is-invalid]="personaForm.get('idSexo')?.invalid && (personaForm.get('idSexo')?.touched || personaForm.get('idSexo')?.dirty)"
               aria-label="Default select example"
               id="idSexo"
               formControlName="idSexo"
               (change)="setSexo($event)"
+              #sexTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('idSexo')"
+              triggers="manual"
+              (change)="getErrorMessage('idSexo') ? sexTooltip.open() : sexTooltip.close()"
+              (blur)="sexTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               >
               @for(sexo of sexoArray; track sexo.idSexo){
                 <option value="{{sexo.idSexo}}">{{sexo.descripcion}}</option>
@@ -64,8 +102,16 @@
               <input
               type="date"
               class="form-control"
+              [class.is-invalid]="personaForm.get('fechaNacimiento')?.invalid && (personaForm.get('fechaNacimiento')?.touched || personaForm.get('fechaNacimiento')?.dirty)"
               id="fechaNacimiento"
               formControlName="fechaNacimiento"
+              #fnTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('fechaNacimiento')"
+              triggers="manual"
+              (input)="getErrorMessage('fechaNacimiento') ? fnTooltip.open() : fnTooltip.close()"
+              (blur)="fnTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               />
             </div>
           </div>
@@ -74,10 +120,18 @@
             <label for="idTipoDocumento" class="col-form-label col-sm-2">Tipo Documento:</label>
             <div class="col-sm-2">
               <select class="form-control form-select"
+              [class.is-invalid]="personaForm.get('idTipoDocumento')?.invalid && (personaForm.get('idTipoDocumento')?.touched || personaForm.get('idTipoDocumento')?.dirty)"
               aria-label="Default select example"
               id="idTipoDocumento"
               formControlName="idTipoDocumento"
               (change)="setTipoDocumento($event)"
+              #tdTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('idTipoDocumento')"
+              triggers="manual"
+              (change)="getErrorMessage('idTipoDocumento') ? tdTooltip.open() : tdTooltip.close()"
+              (blur)="tdTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               >
               @for(tipodoc of tipoDocumentoArray; track tipodoc.idTipoDocumento){
                 <option value="{{tipodoc.idTipoDocumento}}">{{tipodoc.descripcion}}</option>
@@ -92,9 +146,18 @@
               <input
               type="text"
               class="form-control"
+              [class.is-invalid]="personaForm.get('numDocumento')?.invalid && (personaForm.get('numDocumento')?.touched || personaForm.get('numDocumento')?.dirty)"
               id="numDocumento"
               placeholder="numDocumento"
               formControlName="numDocumento"
+              #ndTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('numDocumento')"
+              triggers="manual"
+              (input)="getErrorMessage('numDocumento') ? ndTooltip.open() : ndTooltip.close()"
+              (focus)="getErrorMessage('numDocumento') ? ndTooltip.open() : ndTooltip.close()"
+              (blur)="ndTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               />
             </div>
           </div>
@@ -105,9 +168,18 @@
               <input
               type="text"
               class="form-control"
+              [class.is-invalid]="personaForm.get('telefono')?.invalid && (personaForm.get('telefono')?.touched || personaForm.get('telefono')?.dirty)"
               id="telefono"
               placeholder="Telefono"
               formControlName="telefono"
+              #telTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('telefono')"
+              triggers="manual"
+              (input)="getErrorMessage('telefono') ? telTooltip.open() : telTooltip.close()"
+              (focus)="getErrorMessage('telefono') ? telTooltip.open() : telTooltip.close()"
+              (blur)="telTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               />
             </div>
           </div>
@@ -118,9 +190,18 @@
               <input
               type="text"
               class="form-control"
+              [class.is-invalid]="personaForm.get('direccion')?.invalid && (personaForm.get('direccion')?.touched || personaForm.get('direccion')?.dirty)"
               id="direccion"
               placeholder="Direccion"
               formControlName="direccion"
+              #dirTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('direccion')"
+              triggers="manual"
+              (input)="getErrorMessage('direccion') ? dirTooltip.open() : dirTooltip.close()"
+              (focus)="getErrorMessage('direccion') ? dirTooltip.open() : dirTooltip.close()"
+              (blur)="dirTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               />
             </div>
           </div>
@@ -129,10 +210,18 @@
             <label for="idUbigeo" class="col-form-label col-sm-2">Ubigeo:</label>
             <div class="col-sm-2">
               <select class="form-control form-select"
+              [class.is-invalid]="personaForm.get('idUbigeo')?.invalid && (personaForm.get('idUbigeo')?.touched || personaForm.get('idUbigeo')?.dirty)"
               aria-label="Default select example"
               id="idUbigeo"
               formControlName="idUbigeo"
               (change)="setUbigeo($event)"
+              #ubiTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('idUbigeo')"
+              triggers="manual"
+              (change)="getErrorMessage('idUbigeo') ? ubiTooltip.open() : ubiTooltip.close()"
+              (blur)="ubiTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
               >
               @for(ubigeo of ubigeoArray; track ubigeo.idUbigeo){
                 <option value="{{ubigeo.idUbigeo}}">{{
@@ -144,12 +233,21 @@
               </select>
             </div>
           </div>
-          <button
-          type="submit"
-          class="btn btn-primary"
-          (click)="registrarPersona()"
-          >Registrar
-          </button>
+          <div class="mt-3">
+            <button
+            type="submit"
+            class="btn btn-primary me-2"
+            (click)="registrarPersona()"
+            [disabled]="personaForm.invalid"
+            >Registrar
+            </button>
+            <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="refreshForm()"
+            >Cancelar
+            </button>
+          </div>
         </form>
       </div>
     </div>
