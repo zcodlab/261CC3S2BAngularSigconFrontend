@@ -8,16 +8,40 @@
 
             <form [formGroup]="form" (ngSubmit)="login()">
               <div data-mdb-input-init class="form-outline form-white mb-4">
-                <input type="email" id="email" class="form-control form-control-lg" formControlName="email" />
+                <input type="email" id="email" 
+                  class="form-control form-control-lg" 
+                  [class.is-invalid]="form.get('email')?.invalid && (form.get('email')?.touched || form.get('email')?.dirty)"
+                  formControlName="email"
+                  #emailTooltip="ngbTooltip"
+                  [ngbTooltip]="emailError"
+                  triggers="manual"
+                  (input)="emailError ? emailTooltip.open() : emailTooltip.close()"
+                  (focus)="emailError ? emailTooltip.open() : emailTooltip.close()"
+                  (blur)="emailTooltip.close()"
+                  tooltipClass="red-tooltip"
+                  placement="top"
+                />
                 <label class="form-label" for="email">Correo</label>
               </div>
 
               <div data-mdb-input-init class="form-outline form-white mb-4">
-                <input type="password" [min]="6" [max]="12" id="passwordPersona" class="form-control form-control-lg" formControlName="password"/>
+                <input type="password" id="passwordPersona" 
+                  class="form-control form-control-lg" 
+                  [class.is-invalid]="form.get('password')?.invalid && (form.get('password')?.touched || form.get('password')?.dirty)"
+                  formControlName="password"
+                  #passwordTooltip="ngbTooltip"
+                  [ngbTooltip]="passwordError"
+                  triggers="manual"
+                  (input)="passwordError ? passwordTooltip.open() : passwordTooltip.close()"
+                  (focus)="passwordError ? passwordTooltip.open() : passwordTooltip.close()"
+                  (blur)="passwordTooltip.close()"
+                  tooltipClass="red-tooltip"
+                  placement="top"
+                />
                 <label class="form-label" for="passwordPersona">Contraseña</label>
               </div>
 
-              <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5 me-3" type="submit">Ingresar</button>
+              <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5 me-3" type="submit" [disabled]="form.invalid">Ingresar</button>
               <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5 me-3" type="button" (click)="onBack()">Volver</button>
 
             </form>

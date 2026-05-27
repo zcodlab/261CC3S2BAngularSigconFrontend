@@ -63,3 +63,18 @@ header {
     background: rgba(255, 255, 255, 0.2);
   }
 }
+
+/* Custom Tooltip Styles for Validation */
+.red-tooltip {
+  .tooltip-inner {
+    background-color: #dc3545 !important;
+    color: white !important;
+    font-weight: bold;
+  }
+  .tooltip-arrow::before {
+    border-top-color: #dc3545 !important;
+    border-bottom-color: #dc3545 !important;
+    border-left-color: #dc3545 !important;
+    border-right-color: #dc3545 !important;
+  }
+}
