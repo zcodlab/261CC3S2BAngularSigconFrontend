@@ -13,7 +13,7 @@
               </div>
 
               <div data-mdb-input-init class="form-outline form-white mb-4">
-                <input type="password" id="passwordPersona" class="form-control form-control-lg" formControlName="password" />
+                <input type="password" [min]="6" [max]="12" id="passwordPersona" class="form-control form-control-lg" formControlName="password"/>
                 <label class="form-label" for="passwordPersona">Contraseña</label>
               </div>
 

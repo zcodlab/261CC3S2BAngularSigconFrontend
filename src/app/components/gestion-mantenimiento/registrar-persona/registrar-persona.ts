@@ -40,14 +40,14 @@ export class RegistrarPersona implements OnInit{
   constructor(){
     this.personaForm=new FormGroup({
       idPersona:new FormControl(''),
-      apellidoPaterno:new FormControl('',Validators.required),
-      apellidoMaterno:new FormControl('',Validators.required),
-      nombres:new FormControl('',Validators.required),
+      apellidoPaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-Z][A-Z ]{0,29}$'),]),
+      apellidoMaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-Z][A-Z ]{0,29}$'),]),
+      nombres:new FormControl('',[Validators.required,Validators.pattern('^[A-Z][A-Z ]{0,29}$'),]),
       idSexo:new FormControl('',Validators.required),
       fechaNacimiento:new FormControl('',Validators.required),
       idTipoDocumento:new FormControl('',Validators.required),
-      numDocumento:new FormControl('',Validators.required),
-      telefono:new FormControl('',Validators.required),
+      numDocumento:new FormControl('',[Validators.required,Validators.pattern('^[0-9]{9}$'),]),
+      telefono:new FormControl('',[Validators.required,Validators.pattern('^[1-9][0-9]{8}$'),]),
       direccion:new FormControl('',Validators.required),
       idUbigeo:new FormControl('',Validators.required),
     })
