@@ -52,13 +52,13 @@ export class RegistrarPersona implements OnInit{
           case 'apellidoPaterno':
           case 'apellidoMaterno':
           case 'nombres':
-            return 'Solo letras mayúsculas, máx 30';
+            return 'Solo letras mayúsculas (incluyendo Ñ), máx 30';
           case 'numDocumento':
             return 'Debe tener 9 dígitos numéricos';
           case 'telefono':
             return '9 dígitos (no empieza con 0)';
           case 'direccion':
-            return 'Mayúsculas, no iniciar con espacio, símbolos: #,.°';
+            return 'Mayúsculas (incluyendo Ñ), no iniciar con espacio, símbolos: #,.°';
           default:
             return 'Formato inválido';
         }
@@ -116,9 +116,9 @@ export class RegistrarPersona implements OnInit{
   constructor(){
     this.personaForm=new FormGroup({
       idPersona:new FormControl(''),
-      apellidoPaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-Z][A-Z ]{0,29}$'),]),
-      apellidoMaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-Z][A-Z ]{0,29}$'),]),
-      nombres:new FormControl('',[Validators.required,Validators.pattern('^[A-Z][A-Z ]{0,29}$'),]),
+      apellidoPaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-ZÑ][A-ZÑ ]{0,29}$'),]),
+      apellidoMaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-ZÑ][A-ZÑ ]{0,29}$'),]),
+      nombres:new FormControl('',[Validators.required,Validators.pattern('^[A-ZÑ][A-ZÑ ]{0,29}$'),]),
       idSexo:new FormControl('',Validators.required),
       fechaNacimiento:new FormControl('',[Validators.required, this.ageRangeValidator(18, 80)]),
       idTipoDocumento:new FormControl('',Validators.required),
@@ -128,7 +128,7 @@ export class RegistrarPersona implements OnInit{
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(35),
-        Validators.pattern(/^[A-Z0-9#,.°][A-Z0-9#,.° ]*$/),
+        Validators.pattern(/^[A-ZÑ0-9#,.°][A-ZÑ0-9#,.° ]*$/),
         this.noRepeatedCharsValidator()
       ]),
       idUbigeo:new FormControl('',Validators.required),
