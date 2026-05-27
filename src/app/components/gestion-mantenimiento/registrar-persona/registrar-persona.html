@@ -195,11 +195,13 @@
             <div class="col-sm-4">
               <input
               type="text"
-              class="form-control"
+              class="form-control uppercase-input"
               [class.is-invalid]="personaForm.get('direccion')?.invalid && (personaForm.get('direccion')?.touched || personaForm.get('direccion')?.dirty)"
               id="direccion"
               placeholder="Direccion"
               formControlName="direccion"
+              maxlength="35"
+              (input)="personaForm.get('direccion')?.setValue($any($event.target).value.toUpperCase())"
               #dirTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('direccion')"
               triggers="manual"

@@ -46,6 +46,7 @@ export class RegistrarPersona implements OnInit{
       if (control?.hasError('required')) return 'Este campo es obligatorio';
       if (control?.hasError('ageRange')) return 'Debe tener entre 18 y 80 años';
       if (control?.hasError('sameDigits')) return 'No se permiten todos los dígitos iguales';
+      if (control?.hasError('repeatedChars')) return 'No se permiten 3 caracteres iguales seguidos';
       if (control?.hasError('pattern')) {
         switch (controlName) {
           case 'apellidoPaterno':
@@ -56,10 +57,14 @@ export class RegistrarPersona implements OnInit{
             return 'Debe tener 9 dígitos numéricos';
           case 'telefono':
             return '9 dígitos (no empieza con 0)';
+          case 'direccion':
+            return 'Mayúsculas, no iniciar con espacio, símbolos: #,.°';
           default:
             return 'Formato inválido';
         }
       }
+      if (control?.hasError('minlength')) return `Mínimo ${control.getError('minlength').requiredLength} caracteres`;
+      if (control?.hasError('maxlength')) return `Máximo ${control.getError('maxlength').requiredLength} caracteres`;
     }
     return '';
   }
@@ -98,6 +103,16 @@ export class RegistrarPersona implements OnInit{
     };
   }
 
+  private noRepeatedCharsValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+      const val = control.value.toString();
+      // Detecta 3 o más caracteres idénticos consecutivos
+      const hasRepeated = /(.)\1\1/.test(val);
+      return hasRepeated ? { repeatedChars: true } : null;
+    };
+  }
+
   constructor(){
     this.personaForm=new FormGroup({
       idPersona:new FormControl(''),
@@ -109,7 +124,13 @@ export class RegistrarPersona implements OnInit{
       idTipoDocumento:new FormControl('',Validators.required),
       numDocumento:new FormControl('',[Validators.required, Validators.pattern('^[0-9]{9}$'), this.noSameDigitsValidator()]),
       telefono:new FormControl('',[Validators.required, Validators.pattern('^[0-9]{9}$'), this.noSameDigitsValidator()]),
-      direccion:new FormControl('',Validators.required),
+      direccion:new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(35),
+        Validators.pattern(/^[A-Z0-9#,.°][A-Z0-9#,.° ]*$/),
+        this.noRepeatedCharsValidator()
+      ]),
       idUbigeo:new FormControl('',Validators.required),
     })
   }
