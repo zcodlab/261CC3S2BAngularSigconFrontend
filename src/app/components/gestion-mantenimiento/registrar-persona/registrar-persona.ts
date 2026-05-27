@@ -2,7 +2,7 @@ import { Component,OnInit,ChangeDetectorRef,inject } from '@angular/core';
 import { PersonaRequest } from '../../../model/api/request/persona-request';
 import { PersonaResponse } from '../../../model/api/response/persona-response';
 import { PersonaService } from '../../../services/persona.service';
-import { ReactiveFormsModule, FormControl,FormGroup,Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SexoService } from '../../../services/sexo.service';
@@ -37,11 +37,14 @@ export class RegistrarPersona implements OnInit{
   page:number=1;
   personaForm:FormGroup;
   isEdited: boolean=false;
+  minDate: string = '';
+  maxDate: string = '';
 
   getErrorMessage(controlName: string): string {
     const control = this.personaForm.get(controlName);
     if (control?.touched || control?.dirty) {
       if (control?.hasError('required')) return 'Este campo es obligatorio';
+      if (control?.hasError('ageRange')) return 'Debe tener entre 18 y 80 años';
       if (control?.hasError('pattern')) {
         switch (controlName) {
           case 'apellidoPaterno':
@@ -70,6 +73,20 @@ export class RegistrarPersona implements OnInit{
     }
   }
 
+  private ageRangeValidator(min: number, max: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+      const birthDate = new Date(control.value);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age >= min && age <= max ? null : { ageRange: true };
+    };
+  }
+
   constructor(){
     this.personaForm=new FormGroup({
       idPersona:new FormControl(''),
@@ -77,7 +94,7 @@ export class RegistrarPersona implements OnInit{
       apellidoMaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-Z][A-Z ]{0,29}$'),]),
       nombres:new FormControl('',[Validators.required,Validators.pattern('^[A-Z][A-Z ]{0,29}$'),]),
       idSexo:new FormControl('',Validators.required),
-      fechaNacimiento:new FormControl('',Validators.required),
+      fechaNacimiento:new FormControl('',[Validators.required, this.ageRangeValidator(18, 80)]),
       idTipoDocumento:new FormControl('',Validators.required),
       numDocumento:new FormControl('',[Validators.required,Validators.pattern('^[0-9]{9}$'),]),
       telefono:new FormControl('',[Validators.required,Validators.pattern('^[1-9][0-9]{8}$'),]),
@@ -88,11 +105,24 @@ export class RegistrarPersona implements OnInit{
 
   ngOnInit(): void {
     this.isEdited=false;
+    this.setFechaIni();
     this.getSexo();
     this.getTipoDocumento();
     this.getUbigeo();
     this.getPersonas();
     this.setFormValuesIni();
+  }
+
+  setFechaIni(): void {
+    const today = new Date();
+
+    // minDate: 80 años atrás desde el 1 de enero
+    this.minDate = `${today.getFullYear() - 80}-01-01`;
+
+    // maxDate: 18 años atrás desde hoy
+    const max = new Date();
+    max.setFullYear(today.getFullYear() - 18);
+    this.maxDate = max.toISOString().split('T')[0];
   }
 
   getPersonas():void {

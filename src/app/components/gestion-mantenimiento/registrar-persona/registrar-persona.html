@@ -105,6 +105,8 @@
               [class.is-invalid]="personaForm.get('fechaNacimiento')?.invalid && (personaForm.get('fechaNacimiento')?.touched || personaForm.get('fechaNacimiento')?.dirty)"
               id="fechaNacimiento"
               formControlName="fechaNacimiento"
+              [min]="minDate"
+              [max]="maxDate"
               #fnTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('fechaNacimiento')"
               triggers="manual"
