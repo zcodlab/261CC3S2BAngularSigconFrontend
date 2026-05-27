@@ -80,7 +80,6 @@
               aria-label="Default select example"
               id="idSexo"
               formControlName="idSexo"
-              (change)="setSexo($event)"
               #sexTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('idSexo')"
               triggers="manual"
@@ -90,7 +89,7 @@
               placement="top"
               >
               @for(sexo of sexoArray; track sexo.idSexo){
-                <option value="{{sexo.idSexo}}">{{sexo.descripcion}}</option>
+                <option [value]="sexo.idSexo">{{sexo.descripcion}}</option>
               }
               </select>
             </div>
@@ -126,7 +125,6 @@
               aria-label="Default select example"
               id="idTipoDocumento"
               formControlName="idTipoDocumento"
-              (change)="setTipoDocumento($event)"
               #tdTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('idTipoDocumento')"
               triggers="manual"
@@ -136,7 +134,7 @@
               placement="top"
               >
               @for(tipodoc of tipoDocumentoArray; track tipodoc.idTipoDocumento){
-                <option value="{{tipodoc.idTipoDocumento}}">{{tipodoc.descripcion}}</option>
+                <option [value]="tipodoc.idTipoDocumento">{{tipodoc.descripcion}}</option>
               }
               </select>
             </div>
@@ -222,7 +220,6 @@
               aria-label="Default select example"
               id="idUbigeo"
               formControlName="idUbigeo"
-              (change)="setUbigeo($event)"
               #ubiTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('idUbigeo')"
               triggers="manual"
@@ -232,7 +229,7 @@
               placement="top"
               >
               @for(ubigeo of ubigeoArray; track ubigeo.idUbigeo){
-                <option value="{{ubigeo.idUbigeo}}">{{
+                <option [value]="ubigeo.idUbigeo">{{
                   ubigeo.departamento+"|"+
                   ubigeo.provincia+"|"+
                   ubigeo.distrito
@@ -247,7 +244,7 @@
             class="btn btn-primary me-2"
             (click)="registrarPersona()"
             [disabled]="personaForm.invalid"
-            >Registrar
+            >{{ isEdited ? 'Actualizar' : 'Registrar' }}
             </button>
             <button
             type="button"

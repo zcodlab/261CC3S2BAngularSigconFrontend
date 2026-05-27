@@ -172,11 +172,6 @@ export class RegistrarPersona implements OnInit{
     });
   }
 
-  setSexo(event: Event): void{
-    const inputChangeValue=(event.target as HTMLInputElement).value;
-    this.personaForm.controls['idSexo'].setValue(inputChangeValue)
-  }
-
   getTipoDocumento():void {
     this.tipoDocumentoService.getTipoDocumento().subscribe((result:TipoDocumento[])=>{
       this.tipoDocumentoArray=result;
@@ -184,21 +179,11 @@ export class RegistrarPersona implements OnInit{
     });
   }
 
-  setTipoDocumento(event: Event): void {
-    const inputChangeValue=(event.target as HTMLInputElement).value;
-    this.personaForm.controls['idTipoDocumento'].setValue(inputChangeValue)
-  }
-
   getUbigeo():void {
     this.ubigeoService.getUbigeo().subscribe((result:Ubigeo[])=>{
       this.ubigeoArray=result;
       this.cdr.detectChanges();
     });
-  }
-
-  setUbigeo(event:Event):void{
-    const inputChangeValue=(event.target as HTMLInputElement).value;
-    this.personaForm.controls['idUbigeo'].setValue(inputChangeValue)
   }
 
   setPersonaRequest():void{
@@ -279,13 +264,13 @@ export class RegistrarPersona implements OnInit{
     this.personaService.actualizarPersona(this.personaRequest).subscribe(
       (result:PersonaResponse)=>{
           console.log('actualizarPersona:',result);
-          this.refreshForm();
           Swal.fire({
             icon:'success',
             title:'actualizarPersona...',
             text:'!Se actualizó exitosamente los datos de la persona!',
             confirmButtonColor:'#000080',
           })
+          this.refreshForm();
         },
         (err:any)=>{
           Swal.fire({
@@ -296,6 +281,12 @@ export class RegistrarPersona implements OnInit{
           })
         }
     )
+  }
+
+  private formatDateToInput(dateInput: any): string {
+    if (!dateInput) return '';
+    const date = new Date(dateInput);
+    return !isNaN(date.getTime()) ? date.toISOString().split('T')[0] : '';
   }
 
   editarPersona(persona: PersonaResponse):void{
@@ -310,19 +301,21 @@ export class RegistrarPersona implements OnInit{
     }).then((result)=>{
       if(result.isConfirmed){
         this.personaForm.patchValue({
-        idPersona:persona.idPersona,
-        apellidoPaterno:persona.apellidoPaterno,
-        apellidoMaterno:persona.apellidoMaterno,
-        nombres:persona.nombres,
-        idSexo:persona?.sexo?.idSexo,
-        fechaNacimiento:persona.fechaNacimiento,
-        idTipoDocumento:persona?.tipoDocumento?.idTipoDocumento,
-        numDocumento:persona.numDocumento,
-        telefono:persona.telefono,
-        direccion:persona.direccion,
-        idUbigeo:persona?.ubigeo?.idUbigeo
+          idPersona:persona.idPersona,
+          apellidoPaterno:persona.apellidoPaterno?.toUpperCase(),
+          apellidoMaterno:persona.apellidoMaterno?.toUpperCase(),
+          nombres:persona.nombres?.toUpperCase(),
+          idSexo:persona?.sexo?.idSexo,
+          fechaNacimiento:this.formatDateToInput(persona.fechaNacimiento),
+          idTipoDocumento:persona?.tipoDocumento?.idTipoDocumento,
+          numDocumento:persona.numDocumento,
+          telefono:persona.telefono,
+          direccion:persona.direccion?.toUpperCase(),
+          idUbigeo:persona?.ubigeo?.idUbigeo
         });
         this.isEdited=true;
+        this.personaForm.markAllAsTouched();
+        this.cdr.detectChanges();
       }
     })
   }
