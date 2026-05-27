@@ -45,6 +45,7 @@ export class RegistrarPersona implements OnInit{
     if (control?.touched || control?.dirty) {
       if (control?.hasError('required')) return 'Este campo es obligatorio';
       if (control?.hasError('ageRange')) return 'Debe tener entre 18 y 80 años';
+      if (control?.hasError('sameDigits')) return 'No se permiten todos los dígitos iguales';
       if (control?.hasError('pattern')) {
         switch (controlName) {
           case 'apellidoPaterno':
@@ -87,6 +88,16 @@ export class RegistrarPersona implements OnInit{
     };
   }
 
+  private noSameDigitsValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+      const val = control.value.toString();
+      if (val.length < 2) return null;
+      const allSame = val.split('').every((char: string) => char === val[0]);
+      return allSame ? { sameDigits: true } : null;
+    };
+  }
+
   constructor(){
     this.personaForm=new FormGroup({
       idPersona:new FormControl(''),
@@ -96,8 +107,8 @@ export class RegistrarPersona implements OnInit{
       idSexo:new FormControl('',Validators.required),
       fechaNacimiento:new FormControl('',[Validators.required, this.ageRangeValidator(18, 80)]),
       idTipoDocumento:new FormControl('',Validators.required),
-      numDocumento:new FormControl('',[Validators.required,Validators.pattern('^[0-9]{9}$'),]),
-      telefono:new FormControl('',[Validators.required,Validators.pattern('^[1-9][0-9]{8}$'),]),
+      numDocumento:new FormControl('',[Validators.required, Validators.pattern('^[0-9]{9}$'), this.noSameDigitsValidator()]),
+      telefono:new FormControl('',[Validators.required, Validators.pattern('^[0-9]{9}$'), this.noSameDigitsValidator()]),
       direccion:new FormControl('',Validators.required),
       idUbigeo:new FormControl('',Validators.required),
     })
