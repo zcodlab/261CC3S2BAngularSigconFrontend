@@ -97,7 +97,7 @@ export class RegistrarPersona implements OnInit{
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) return null;
       const val = control.value.toString();
-      if (val.length < 2) return null;
+      if (val.length < 7) return null;
       const allSame = val.split('').every((char: string) => char === val[0]);
       return allSame ? { sameDigits: true } : null;
     };
