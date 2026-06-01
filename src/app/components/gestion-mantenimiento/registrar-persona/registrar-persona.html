@@ -4,7 +4,7 @@
     <!-- Form Cabecera -->
     <div class="card">
       <div class="card-body">
-        <form class="form-group" [formGroup]="personaForm" (keydown.enter)="onEnterKey($event)">
+        <form class="form-group" [formGroup]="personaForm" (keydown.enter)="onEnterKey($event)" autocomplete="off">
           <div class="row mb-2">
             <label for="apellidoPaterno" class="col-form-label col-sm-2">Apellido Paterno:</label>
             <div class="col-sm-4">
@@ -15,7 +15,7 @@
               id="apellidoPaterno"
               placeholder="Apellido Paterno"
               formControlName="apellidoPaterno"
-              (input)="personaForm.get('apellidoPaterno')?.setValue($any($event.target).value.toUpperCase())"
+              (input)="personaForm.get('apellidoPaterno')?.setValue($any($event.target).value.toUpperCase().replace(/[^A-ZÑÁÉÍÓÚ ]/g, '').trimStart())"
               #apTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('apellidoPaterno')"
               triggers="manual"
@@ -37,7 +37,7 @@
               id="apellidoMaterno"
               placeholder="Apellido Materno"
               formControlName="apellidoMaterno"
-              (input)="personaForm.get('apellidoMaterno')?.setValue($any($event.target).value.toUpperCase())"
+              (input)="personaForm.get('apellidoMaterno')?.setValue($any($event.target).value.toUpperCase().replace(/[^A-ZÑÁÉÍÓÚ ]/g, '').trimStart())"
               #amTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('apellidoMaterno')"
               triggers="manual"
@@ -59,7 +59,7 @@
               id="nombres"
               placeholder="Nombres"
               formControlName="nombres"
-              (input)="personaForm.get('nombres')?.setValue($any($event.target).value.toUpperCase())"
+              (input)="personaForm.get('nombres')?.setValue($any($event.target).value.toUpperCase().replace(/[^A-ZÑÁÉÍÓÚ ]/g, '').trimStart())"
               #nomTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('nombres')"
               triggers="manual"
@@ -199,7 +199,7 @@
               placeholder="Direccion"
               formControlName="direccion"
               maxlength="35"
-              (input)="personaForm.get('direccion')?.setValue($any($event.target).value.toUpperCase())"
+              (input)="personaForm.get('direccion')?.setValue($any($event.target).value.toUpperCase().replace(/[^A-ZÑÁÉÍÓÚ0-9 ]/g, '').trimStart().replace(/^\d+/, ''))"
               #dirTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('direccion')"
               triggers="manual"

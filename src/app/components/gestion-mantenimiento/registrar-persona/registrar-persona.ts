@@ -47,18 +47,19 @@ export class RegistrarPersona implements OnInit{
       if (control?.hasError('ageRange')) return 'Debe tener entre 18 y 80 años';
       if (control?.hasError('sameDigits')) return 'No se permiten todos los dígitos iguales';
       if (control?.hasError('repeatedChars')) return 'No se permiten 3 caracteres iguales seguidos';
+      if (control?.hasError('maxConsecutive')) return 'No se permiten más de 4 dígitos iguales seguidos';
       if (control?.hasError('pattern')) {
         switch (controlName) {
           case 'apellidoPaterno':
           case 'apellidoMaterno':
           case 'nombres':
-            return 'Solo letras mayúsculas (incluyendo Ñ), máx 30';
+            return 'Solo letras mayúsculas (incluyendo Ñ y tildes), máx 30';
           case 'numDocumento':
-            return 'Debe tener 9 dígitos numéricos';
+            return '9 dígitos, sin 5 repetidos';
           case 'telefono':
-            return '9 dígitos (no empieza con 0)';
+            return '9 dígitos, sin 5 repetidos';
           case 'direccion':
-            return 'Mayúsculas (incluyendo Ñ), no iniciar con espacio, símbolos: #,.°';
+            return 'Inicia con letra, un solo número (1-4 dígitos), sin símbolos';
           default:
             return 'Formato inválido';
         }
@@ -103,6 +104,15 @@ export class RegistrarPersona implements OnInit{
     };
   }
 
+  private maxConsecutiveSameDigitsValidator(max: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+      const val = control.value.toString();
+      const regex = new RegExp(`(.)\\1{${max},}`);
+      return regex.test(val) ? { maxConsecutive: true } : null;
+    };
+  }
+
   private noRepeatedCharsValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) return null;
@@ -116,19 +126,19 @@ export class RegistrarPersona implements OnInit{
   constructor(){
     this.personaForm=new FormGroup({
       idPersona:new FormControl(''),
-      apellidoPaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-ZÑ][A-ZÑ ]{0,29}$'),]),
-      apellidoMaterno:new FormControl('',[Validators.required,Validators.pattern('^[A-ZÑ][A-ZÑ ]{0,29}$'),]),
-      nombres:new FormControl('',[Validators.required,Validators.pattern('^[A-ZÑ][A-ZÑ ]{0,29}$'),]),
+      apellidoPaterno:new FormControl('',[Validators.required,Validators.pattern(/^[A-ZÑÁÉÍÓÚ][A-ZÑÁÉÍÓÚ ]{0,29}$/),]),
+      apellidoMaterno:new FormControl('',[Validators.required,Validators.pattern(/^[A-ZÑÁÉÍÓÚ][A-ZÑÁÉÍÓÚ ]{0,29}$/),]),
+      nombres:new FormControl('',[Validators.required,Validators.pattern(/^[A-ZÑÁÉÍÓÚ][A-ZÑÁÉÍÓÚ ]{0,29}$/),]),
       idSexo:new FormControl('',Validators.required),
       fechaNacimiento:new FormControl('',[Validators.required, this.ageRangeValidator(18, 80)]),
       idTipoDocumento:new FormControl('',Validators.required),
-      numDocumento:new FormControl('',[Validators.required, Validators.pattern('^[0-9]{9}$'), this.noSameDigitsValidator()]),
-      telefono:new FormControl('',[Validators.required, Validators.pattern('^[0-9]{9}$'), this.noSameDigitsValidator()]),
+      numDocumento:new FormControl('',[Validators.required, Validators.pattern('^[0-9]{9}$'), this.noSameDigitsValidator(), this.maxConsecutiveSameDigitsValidator(4)]),
+      telefono:new FormControl('',[Validators.required, Validators.pattern('^[0-9]{9}$'), this.noSameDigitsValidator(), this.maxConsecutiveSameDigitsValidator(4)]),
       direccion:new FormControl('', [
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(35),
-        Validators.pattern(/^[A-ZÑ0-9#,.°][A-ZÑ0-9#,.° ]*$/),
+        Validators.pattern(/^[A-ZÑÁÉÍÓÚ][A-ZÑÁÉÍÓÚ ]*(\d{1,4}[A-ZÑÁÉÍÓÚ ]*)?$/),
         this.noRepeatedCharsValidator()
       ]),
       idUbigeo:new FormControl('',Validators.required),
