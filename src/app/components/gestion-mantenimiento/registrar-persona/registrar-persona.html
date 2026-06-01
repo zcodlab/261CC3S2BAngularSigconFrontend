@@ -199,7 +199,7 @@
               placeholder="Direccion"
               formControlName="direccion"
               maxlength="35"
-              (input)="personaForm.get('direccion')?.setValue($any($event.target).value.toUpperCase().replace(/[^A-ZÑÁÉÍÓÚ0-9 ]/g, '').trimStart().replace(/^\d+/, ''))"
+              (input)="personaForm.get('direccion')?.setValue($any($event.target).value.toUpperCase().replace(/[^A-ZÑÁÉÍÓÚ0-9 .°-]/g, '').trimStart().replace(/^\d+/, ''))"
               #dirTooltip="ngbTooltip"
               [ngbTooltip]="getErrorMessage('direccion')"
               triggers="manual"

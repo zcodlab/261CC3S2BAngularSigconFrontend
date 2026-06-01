@@ -59,7 +59,7 @@ export class RegistrarPersona implements OnInit{
           case 'telefono':
             return '9 dígitos, sin 5 repetidos';
           case 'direccion':
-            return 'Inicia con letra, un solo número (1-4 dígitos), sin símbolos';
+            return 'Inicia con letra, un solo número (1-4 dígitos), símbolos: . ° -';
           default:
             return 'Formato inválido';
         }
@@ -138,7 +138,7 @@ export class RegistrarPersona implements OnInit{
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(35),
-        Validators.pattern(/^[A-ZÑÁÉÍÓÚ][A-ZÑÁÉÍÓÚ ]*(\d{1,4}[A-ZÑÁÉÍÓÚ ]*)?$/),
+        Validators.pattern(/^[A-ZÑÁÉÍÓÚ][A-ZÑÁÉÍÓÚ .°-]*(\d{1,4}[A-ZÑÁÉÍÓÚ .°-]*)?$/),
         this.noRepeatedCharsValidator()
       ]),
       idUbigeo:new FormControl('',Validators.required),
