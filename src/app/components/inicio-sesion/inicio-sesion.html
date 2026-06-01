@@ -8,13 +8,15 @@
         <p class="text-muted">Por favor, ingrese su correo y contraseña</p>
       </header>
 
-      <form [formGroup]="form" (ngSubmit)="login()" class="mb-4">
+      <form [formGroup]="form" (ngSubmit)="login()" class="mb-4" (keydown.enter)="onEnterKey($event)" autocomplete="off">
         <div class="form-floating mb-4">
-          <input type="email" id="email" 
-            class="form-control form-control-lg" 
+          <input type="email" id="email"
+            class="form-control form-control-lg"
             [class.is-invalid]="form.get('email')?.invalid && (form.get('email')?.touched || form.get('email')?.dirty)"
             formControlName="email"
             placeholder="name@example.com"
+            maxlength="20"
+            (input)="form.get('email')?.setValue($any($event.target).value.replace(/\s/g, '').replace(/[^A-Za-z1-9@._]/g, ''))"
             #emailTooltip="ngbTooltip"
             [ngbTooltip]="emailError"
             triggers="manual"
@@ -27,12 +29,14 @@
           <label for="email">Correo</label>
         </div>
 
-        <div class="form-floating mb-4">
-          <input type="password" id="passwordPersona" 
-            class="form-control form-control-lg" 
+        <div class="form-floating mb-4 position-relative">
+          <input [type]="isPasswordVisible ? 'text' : 'password'" id="passwordPersona"
+            class="form-control form-control-lg pe-5"
             [class.is-invalid]="form.get('password')?.invalid && (form.get('password')?.touched || form.get('password')?.dirty)"
             formControlName="password"
             placeholder="Contraseña"
+            maxlength="12"
+            (input)="form.get('password')?.setValue($any($event.target).value.replace(/\s/g, ''))"
             #passwordTooltip="ngbTooltip"
             [ngbTooltip]="passwordError"
             triggers="manual"
@@ -43,6 +47,13 @@
             placement="top"
           />
           <label for="passwordPersona">Contraseña</label>
+          <button type="button" 
+            class="btn position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent pe-3" 
+            (click)="togglePasswordVisibility()"
+            tabindex="-1"
+            style="z-index: 5;">
+            <i [class]="isPasswordVisible ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+          </button>
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
