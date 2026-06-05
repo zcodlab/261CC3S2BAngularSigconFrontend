@@ -300,16 +300,47 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Apellido Paterno</th>
-              <th scope="col">Apellido Materno</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Genero</th>
-              <th scope="col">Fech.Nac</th>
-              <th scope="col">TipoDocumento</th>
-              <th scope="col">N°Docu</th>
-              <th scope="col">Telefono</th>
-              <th scope="col">Direccion</th>
-              <th scope="col">Ubigeo</th>
+              <th scope="col" (click)="sortData('apellidoPaterno')" class="sortable-header">
+                Apellido Paterno @if (sortColumn === 'apellidoPaterno') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('apellidoMaterno')" class="sortable-header">
+                Apellido Materno @if (sortColumn === 'apellidoMaterno') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('nombres')" class="sortable-header">
+                Nombre @if (sortColumn === 'nombres') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('sexo')" class="sortable-header">
+                Genero @if (sortColumn === 'sexo') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('fechaNacimiento')" class="sortable-header">
+                Fech.Nac @if (sortColumn === 'fechaNacimiento') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('tipoDocumento')" class="sortable-header">
+                TipoDocumento @if (sortColumn === 'tipoDocumento') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('numDocumento')" class="sortable-header">
+                N°Docu @if (sortColumn === 'numDocumento') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('telefono')" class="sortable-header">
+                Telefono @if (sortColumn === 'telefono') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('direccion')" class="sortable-header">
+                Direccion @if (sortColumn === 'direccion') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+              <th scope="col" (click)="sortData('ubigeo')" class="sortable-header">
+                Ubigeo @if (sortColumn === 'ubigeo') {
+                  <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                }</th>
+                <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>

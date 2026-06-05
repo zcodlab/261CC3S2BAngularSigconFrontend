@@ -42,6 +42,8 @@ export class RegistrarPersona implements OnInit{
   isEdited: boolean=false;
   minDate: string = '';
   maxDate: string = '';
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   //idUbigeo->aabbcc =150101 donde aa:codigo del departamento bb:codigo de la provincia cc:codigo del distrito
   filterProvincias(idDepartamento: string | undefined): void {
@@ -79,6 +81,45 @@ export class RegistrarPersona implements OnInit{
     const idProv = this.personaForm.get('idProvincia')?.value;
     this.filterDistritos(idProv);
     this.personaForm.patchValue({ idDistrito: '' });
+  }
+
+  //para ordenar la tabla
+  sortData(column: string): void {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.applySort();
+  }
+
+  applySort(): void {
+    this.personaArray.sort((a: any, b: any) => {
+      let valA = this.getSortValue(a, this.sortColumn);
+      let valB = this.getSortValue(b, this.sortColumn);
+
+      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+    this.cdr.detectChanges();
+  }
+
+  getSortValue(obj: any, column: string): any {
+    switch (column) {
+      case 'apellidoPaterno': return obj.apellidoPaterno?.toLowerCase();
+      case 'apellidoMaterno': return obj.apellidoMaterno?.toLowerCase();
+      case 'nombres': return obj.nombres?.toLowerCase();
+      case 'sexo': return obj.sexo?.toLowerCase();
+      case 'fechaNacimiento': return obj.fechaNacimiento;
+      case 'tipoDocumento': return obj.tipoDocumento?.descripcion?.toLowerCase() || '';
+      case 'numDocumento': return obj.numDocumento;
+      case 'telefono': return obj.telefono;
+      case 'direccion': return obj.direccion?.toLowerCase();
+      case 'ubigeo': return (obj.ubigeo?.departamento + obj.ubigeo?.provincia + obj.ubigeo?.distrito)?.toLowerCase() || '';
+      default: return '';
+    }
   }
 
   getErrorMessage(controlName: string): string {

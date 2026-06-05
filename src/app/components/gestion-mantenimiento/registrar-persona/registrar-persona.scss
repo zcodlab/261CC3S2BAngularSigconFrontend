@@ -44,3 +44,18 @@
     flex: 0 0 auto;
     width: 16.6%; /* Equivale a col-sm-2.5 aprox */
 }
+
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  span {
+    margin-left: 5px;
+    font-size: 0.8em;
+  }
+}
