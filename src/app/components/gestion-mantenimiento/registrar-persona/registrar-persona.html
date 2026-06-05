@@ -211,33 +211,70 @@
               />
             </div>
           </div>
-
+          <!--Ubigeo desacoplado en 3 celdas-->
           <div class="row mb-2">
-            <label for="idUbigeo" class="col-form-label col-sm-2">Ubigeo:</label>
-            <div class="col-sm-2">
+            <label for="idDepartamento" class="col-form-label col-sm-2">Departamento:</label>
+            <div class="col-sm-2 me-2">
               <select class="form-control form-select"
-              [class.is-invalid]="personaForm.get('idUbigeo')?.invalid && (personaForm.get('idUbigeo')?.touched || personaForm.get('idUbigeo')?.dirty)"
+              [class.is-invalid]="personaForm.get('idDepartamento')?.invalid && (personaForm.get('idDepartamento')?.touched || personaForm.get('idDepartamento')?.dirty)"
               aria-label="Default select example"
-              id="idUbigeo"
-              formControlName="idUbigeo"
-              #ubiTooltip="ngbTooltip"
-              [ngbTooltip]="getErrorMessage('idUbigeo')"
+              id="idDepartamento"
+              formControlName="idDepartamento"
+              #depTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('idDepartamento')"
               triggers="manual"
-              (change)="getErrorMessage('idUbigeo') ? ubiTooltip.open() : ubiTooltip.close()"
-              (blur)="ubiTooltip.close()"
+              (change)="onDepartamentoChange(); getErrorMessage('idDepartamento') ? depTooltip.open() : depTooltip.close()"
+              (blur)="depTooltip.close()"
               tooltipClass="red-tooltip"
               placement="top"
               >
-              @for(ubigeo of ubigeoArray; track ubigeo.idUbigeo){
-                <option [value]="ubigeo.idUbigeo">{{
-                  ubigeo.departamento+"|"+
-                  ubigeo.provincia+"|"+
-                  ubigeo.distrito
-                }}</option>
-              }
+              <option value="" disabled selected>Departamento</option>
+              @for(dep of departamentos; track dep.idUbigeo){<option [value]="dep.idUbigeo">{{dep.departamento}}</option>}
+              </select>
+            </div>
+
+            <label for="idProvincia" class="col-form-label col-ubigeo-label">Provincia:</label>
+            <div class="col-ubigeo-select me-2">
+              <select class="form-control form-select"
+              [class.is-invalid]="personaForm.get('idProvincia')?.invalid && (personaForm.get('idProvincia')?.touched || personaForm.get('idProvincia')?.dirty)"
+              aria-label="Default select example"
+              id="idProvincia"
+              formControlName="idProvincia"
+              #provTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('idProvincia')"
+              triggers="manual"
+              (change)="onProvinciaChange(); getErrorMessage('idProvincia') ? provTooltip.open() : provTooltip.close()"
+              (blur)="provTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
+              >
+              <option value="" disabled selected>Provincia</option>
+              @for(prov of provincias; track prov.idUbigeo){<option [value]="prov.idUbigeo">{{prov.provincia}}</option>}
+              </select>
+            </div>
+
+            <label for="idDistrito" class="col-form-label col-ubigeo-label">Distrito:</label>
+            <div class="col-ubigeo-select">
+              <select class="form-control form-select"
+              [class.is-invalid]="personaForm.get('idDistrito')?.invalid && (personaForm.get('idDistrito')?.touched || personaForm.get('idDistrito')?.dirty)"
+              aria-label="Default select example"
+              id="idDistrito"
+              formControlName="idDistrito"
+              #distTooltip="ngbTooltip"
+              [ngbTooltip]="getErrorMessage('idDistrito')"
+              triggers="manual"
+              (change)="getErrorMessage('idDistrito') ? distTooltip.open() : distTooltip.close()"
+              (blur)="distTooltip.close()"
+              tooltipClass="red-tooltip"
+              placement="top"
+              >
+              <option value="" disabled selected>Distrito</option>
+              @for(dist of distritos; track dist.idUbigeo){<option [value]="dist.idUbigeo">{{dist.distrito}}</option>}
               </select>
             </div>
           </div>
+          <!--Fin del Ubigeo-->
+
           <div class="mt-3">
             <button
             type="submit"

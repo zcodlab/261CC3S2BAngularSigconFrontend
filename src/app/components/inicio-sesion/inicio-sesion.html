@@ -45,10 +45,11 @@
             (blur)="passwordTooltip.close()"
             tooltipClass="red-tooltip"
             placement="top"
+            autocomplete="one-time-code"
           />
           <label for="passwordPersona">Contraseña</label>
-          <button type="button" 
-            class="btn position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent pe-3" 
+          <button type="button"
+            class="btn position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent pe-3"
             (click)="togglePasswordVisibility()"
             tabindex="-1"
             style="z-index: 5;">
