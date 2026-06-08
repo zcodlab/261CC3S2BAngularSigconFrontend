@@ -103,6 +103,9 @@ export class InicioSesion {
   login() {
     if (this.form.invalid) return;
 
+    // Limpiamos sesión previa para evitar que el interceptor envíe tokens expirados
+    this.authService.logout();
+
     const { email, password } = this.form.value;
     if (!email || !password) return;
 

@@ -2,6 +2,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 import { provideHttpClient,withInterceptors } from '@angular/common/http';
 import { loadingInterceptor } from './interceptors/loading-interceptor';
+import { authInterceptor } from './interceptors/auth-interceptor';
 
 import { routes } from './app.routes';
 
@@ -9,6 +10,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([loadingInterceptor]))
+    provideHttpClient(withInterceptors([loadingInterceptor,authInterceptor]))
   ]
 };

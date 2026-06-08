@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { UserSesion } from '../model/user-sesion';
-import { Rol } from '../model/rol';
-import { Modulo } from '../model/modulo';
 
 @Injectable({
   providedIn: 'root',
