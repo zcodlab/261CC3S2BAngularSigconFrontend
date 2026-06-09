@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  url: 'http://localhost:8080/api/v1'
+  production: true,
+  url: 'https://two61cc3s2bspringsigconbackend.onrender.com/api/v1'
 };
