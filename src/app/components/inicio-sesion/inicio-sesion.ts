@@ -117,7 +117,7 @@ export class InicioSesion {
         this.userResponse=result;
         console.log(this.userResponse);
         console.log('Login successful');
-        this.authService.setToken(this.userResponse.token);
+        this.authService.setTokens(this.userResponse.token, this.userResponse.refreshToken);
         console.log(this.sessionService.getInfoSession());
         this.toastService.show('Ingreso exitoso', 'success');
         this.router.navigate(['/dashboard']);

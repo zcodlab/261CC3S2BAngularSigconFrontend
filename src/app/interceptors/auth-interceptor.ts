@@ -26,6 +26,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   const token = storageService.getToken();
+
+  // Verificacion proactiva: si el token ha caducado, actualicelo antes de enviar la solicitud.
+  if (token && storageService.isTokenExpired(token)) {
+    return refreshTokenAndRetry(req, next, authService);
+  }
+
   let authReq = req;
 
   if (token) {
@@ -38,15 +44,17 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((error) => {
+      // Opcion alternativa: si obtenemos un error 403,
+      // intentaremos actualizar la pagina de todos modos (por ejemplo, debido a una desviacion del reloj).
       if (error instanceof HttpErrorResponse && error.status === 403) {
-        return handle403Error(authReq, next, authService);
+        return refreshTokenAndRetry(req, next, authService);
       }
       return throwError(() => error);
     })
   );
 };
 
-const handle403Error = (request: any, next: any, authService: AuthService): Observable<any> => {
+const refreshTokenAndRetry = (request: any, next: any, authService: AuthService): Observable<any> => {
   if (!isRefreshing) {
     isRefreshing = true;
     refreshTokenSubject.next(null);

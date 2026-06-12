@@ -107,6 +107,14 @@ export class StorageService {
       return this.sessionService.getInfoSession();
     }
 
+    isTokenExpired(token: string | null): boolean {
+      if (!token) return true;
+      const expiration = this.getExpirationFromToken(token);
+      if (!expiration) return true;
+      // Consideramos expirado si falta menos de 10 segundos para expirar para evitar fallos por milisegundos
+      return expiration.getTime() < (Date.now() + 10000);
+    }
+
     updateSession(token: string, refreshToken?: string): void {
       this.setItem("user_token", token);
       if (refreshToken) {

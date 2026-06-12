@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { UserRequest } from '../model/api/request/user-request';
 import { UserResponse } from '../model/api/response/user-response';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -22,6 +22,9 @@ export class AuthService {
 
   refreshToken(): Observable<UserResponse> {
     const refreshToken = this.storageService.getRefreshToken();
+    if (!refreshToken) {
+      return throwError(() => new Error('No refresh token available'));
+    }
     return this.http.post<UserResponse>(`${environment.url}/auth/refresh`, { refreshToken }).pipe(
       tap((response: UserResponse) => {
         this.setTokens(response.token, response.refreshToken);
